@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `ssaca`.`board` (
   CONSTRAINT `fk_board_user`
     FOREIGN KEY (`writer`)
     REFERENCES `ssaca`.`user` (`id`)
-    ON DELETE NO ACTION
+	ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -61,12 +61,12 @@ CREATE TABLE IF NOT EXISTS `ssaca`.`chatRoom` (
   CONSTRAINT `fk_chatRoom_user1`
     FOREIGN KEY (`sellerId`)
     REFERENCES `ssaca`.`user` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_chatRoom_user2`
     FOREIGN KEY (`userId`)
     REFERENCES `ssaca`.`user` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `ssaca`.`chatMessage` (
   CONSTRAINT `fk_chatMessage_chatRoom1`
     FOREIGN KEY (`roomId`)
     REFERENCES `ssaca`.`chatRoom` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
