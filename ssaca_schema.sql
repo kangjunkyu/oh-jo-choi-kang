@@ -20,6 +20,7 @@ USE `ssaca` ;
 CREATE TABLE IF NOT EXISTS `ssaca`.`user` (
   `id` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
+  `nickname` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
