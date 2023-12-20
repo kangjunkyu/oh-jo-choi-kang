@@ -47,6 +47,7 @@ public class BoardRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // 게시글 업데이트
     @PutMapping("/board")
     public ResponseEntity<?> updateBoard(@RequestBody Board board){
         boardService.updateBoard(board);
