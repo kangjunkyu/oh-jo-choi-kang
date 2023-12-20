@@ -1,6 +1,7 @@
 package com.ssaca.model.service;
 
 import com.ssaca.model.dto.Board;
+import com.ssaca.model.dto.wishList;
 
 import java.util.List;
 
@@ -22,5 +23,14 @@ public interface BoardService {
 
     // 조회수 증가
     void updateViewCnt(int id);
+
+    // 찜하기
+    int insertWishList(wishList wishList);
+
+    // 찜 삭제
+    void deleteWishList(wishList wishList);
+
+    // 찜한 게시글 전체 조회
+    List<Board> selectAllWishList(String userId);
 
 }
