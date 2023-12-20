@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssaca.model.dao.UserDao">
+    <select id="selectAll" resultType="User">
+        SELECT * FROM user;
+    </select>
+
+    <select id="selectOne" parameterType="String" resultType="User">
+        SELECT * FROM user
+        WHERE id = #{id};
+    </select>
+
+    <select id="searchUsers" parameterType="String" resultType="User">
+        SELECT * FROM user
+        WHERE id LIKE CONCAT('%', #{word},'%') OR
+        nickname LIKE CONCAT('%', #{word},'%');
+    </select>
+
+    <insert id="insertUser" parameterType="User" >
+        INSERT INTO user
+        (id, password, nickname)
+        VALUES(#{id}, #{password}, #{nickname});
+    </insert>
+
+    <delete id="deleteUser" parameterType="String">
+        DELETE FROM user
+        WHERE id = #{id};
+    </delete>
+</mapper>

@@ -1,4 +1,4 @@
-package com.ssaca.dto;
+package com.ssaca.model.dto;
 
 import lombok.Getter;
 import lombok.Setter;

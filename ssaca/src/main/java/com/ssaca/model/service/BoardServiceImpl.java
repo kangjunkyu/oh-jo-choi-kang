@@ -1,7 +1,7 @@
-package com.ssaca.service;
+package com.ssaca.model.service;
 
-import com.ssaca.dao.BoardDao;
-import com.ssaca.dto.Board;
+import com.ssaca.model.dao.BoardDao;
+import com.ssaca.model.dto.Board;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

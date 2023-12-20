@@ -1,6 +1,6 @@
-package com.ssaca.service;
+package com.ssaca.model.service;
 
-import com.ssaca.dto.Board;
+import com.ssaca.model.dto.Board;
 
 import java.util.List;
 

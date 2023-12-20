@@ -1,6 +1,6 @@
-package com.ssaca.dao;
+package com.ssaca.model.dao;
 
-import com.ssaca.dto.Board;
+import com.ssaca.model.dto.Board;
 
 import java.util.List;
 

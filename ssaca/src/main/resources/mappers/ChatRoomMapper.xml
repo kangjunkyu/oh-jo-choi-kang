@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssaca.model.dao.ChatRoomDao">
+    <select id="selectAll" resultType="ChatRoom">
+        SELECT * FROM chatRoom;
+    </select>
+
+    <select id="selectOne" parameterType="int" resultType="ChatRoom">
+        SELECT * FROM chatRoom
+        WHERE id = #{id};
+    </select>
+
+    <insert id="insertChatRoom" parameterType="ChatRoom" >
+        INSERT INTO chatRoom
+        (id, sellerId, userId)
+        VALUES(#{id}, #{sellerId}, #{userId});
+    </insert>
+
+    <delete id="deleteChatRoom" parameterType="int">
+        DELETE FROM chatRoom
+        WHERE id = #{id};
+    </delete>
+</mapper>

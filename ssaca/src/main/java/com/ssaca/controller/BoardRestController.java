@@ -1,7 +1,7 @@
 package com.ssaca.controller;
 
-import com.ssaca.dto.Board;
-import com.ssaca.service.BoardService;
+import com.ssaca.model.dto.Board;
+import com.ssaca.model.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
