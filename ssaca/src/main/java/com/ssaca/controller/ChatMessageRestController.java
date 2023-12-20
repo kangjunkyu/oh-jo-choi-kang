@@ -42,7 +42,7 @@ public class ChatMessageRestController {
         return new ResponseEntity<ChatMessage>(chatMessage, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteChatRoom(@PathVariable int id) {
         int result = chatMessageService.deleteMessage(id);
         if (result == 0)

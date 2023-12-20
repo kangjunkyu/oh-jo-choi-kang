@@ -40,7 +40,7 @@ public class ChatRoomRestController {
         return new ResponseEntity<ChatRoom>(chatRoom, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteChatRoom(@PathVariable int id) {
         int result = chatRoomService.deleteChatRoom(id);
         if (result == 0)
