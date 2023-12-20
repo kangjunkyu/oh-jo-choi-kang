@@ -1,7 +1,9 @@
 package com.ssaca.controller;
 
 import com.ssaca.dto.Board;
+import com.ssaca.dto.wishList;
 import com.ssaca.service.BoardService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,18 +18,18 @@ public class BoardRestController {
     @Autowired
     BoardService boardService;
 
-    // 게시글 전체조회
     @GetMapping("/board")
-    public ResponseEntity<?> getBoardList(){
+    @Tag(name = "게시글 전체 조회")
+    public ResponseEntity<?> getBoardList() {
         List<Board> result = boardService.selectAll();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    // 게시글 상세조회
     @GetMapping("/board/{id}")
-    public ResponseEntity<?> getBoard(@PathVariable int id){
+    @Tag(name = "게시글 상세 조회")
+    public ResponseEntity<?> getBoard(@PathVariable int id) {
         Board result = boardService.selectOne(id);
-        if(result == null){
+        if (result == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -35,30 +37,54 @@ public class BoardRestController {
 
     // 게시글 등록
     @PostMapping("/board")
-    public ResponseEntity<?> createBoard(@RequestBody Board board){
+    @Tag(name = "게시글 등록")
+    public ResponseEntity<?> createBoard(@RequestBody Board board) {
         int result = boardService.insertBoard(board);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    // 게시글 삭제
     @DeleteMapping("/board/{id}")
-    public ResponseEntity<?> deleteBoard(@PathVariable int id){
+    @Tag(name = "게시글 삭제")
+    public ResponseEntity<?> deleteBoard(@PathVariable int id) {
         boardService.deleteBoard(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // 게시글 업데이트
     @PutMapping("/board")
-    public ResponseEntity<?> updateBoard(@RequestBody Board board){
+    @Tag(name = "게시글 수정")
+    public ResponseEntity<?> updateBoard(@RequestBody Board board) {
         boardService.updateBoard(board);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // 조회수 증가
     @PutMapping("/board/{id}")
-    public ResponseEntity<?> updateViewCnt(@PathVariable int id){
+    @Tag(name = "조회수 증가")
+    public ResponseEntity<?> updateViewCnt(@PathVariable int id) {
         boardService.updateViewCnt(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping("/board/like")
+    @Tag(name = "찜하기")
+    public ResponseEntity<?> insertWishList(@RequestBody wishList wishList) {
+        boardService.insertWishList(wishList);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/board/dislike")
+    @Tag(name = "찜하기 해제")
+    public ResponseEntity<?> deleteWishList(@RequestBody wishList wishList) {
+        boardService.deleteWishList(wishList);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // 찜한 게시물 전체 조회
+    @GetMapping("/board/like")
+    @Tag(name = "찜한 게시글 전체 조회")
+    public ResponseEntity<?> getWishList(String userId){
+        List<Board> result = boardService.selectAllWishList(userId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 
 }

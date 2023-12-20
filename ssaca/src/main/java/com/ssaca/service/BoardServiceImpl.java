@@ -2,6 +2,7 @@ package com.ssaca.service;
 
 import com.ssaca.dao.BoardDao;
 import com.ssaca.dto.Board;
+import com.ssaca.dto.wishList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +42,20 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void updateViewCnt(int id) {
         dao.updateViewCnt(id);
+    }
+
+    @Override
+    public int insertWishList(wishList wishList) {
+        return dao.insertWishList(wishList);
+    }
+
+    @Override
+    public void deleteWishList(wishList wishList) {
+        dao.deleteWishList(wishList);
+    }
+
+    @Override
+    public List<Board> selectAllWishList(String userId) {
+        return dao.selectAllWishList(userId);
     }
 }

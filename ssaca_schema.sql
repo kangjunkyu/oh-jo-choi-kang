@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `ssaca`.`board` (
   `price` INT NOT NULL,
   `img` TEXT,
   `orgImg` TEXT,
-  `status` INT NOT NULL,
+  `status` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   INDEX `fk_board_user_idx` (`writer` ASC) VISIBLE,
   CONSTRAINT `fk_board_user`
