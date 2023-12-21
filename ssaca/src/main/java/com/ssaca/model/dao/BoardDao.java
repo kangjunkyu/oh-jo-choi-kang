@@ -10,6 +10,9 @@ public interface BoardDao {
     // 전체 조회
     List<Board> selectAll();
 
+    // 작성한 게시글 조회
+    List<Board> selectUser(String userId);
+
     // 상세 조회
     Board selectOne(int id);
 

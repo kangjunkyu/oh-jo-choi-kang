@@ -1,0 +1,20 @@
+#header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 100px;
+  background-color: blue;
+}
+#logo {
+  display: flex;
+  flex-direction: row;
+}
+
+#menu {
+  display: flex;
+  flex-direction: row;
+}
+
+div {
+  font-size: 30px;
+}
