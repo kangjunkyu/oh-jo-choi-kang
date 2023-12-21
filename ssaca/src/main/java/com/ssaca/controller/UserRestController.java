@@ -2,6 +2,7 @@ package com.ssaca.controller;
 
 import com.ssaca.model.dto.User;
 import com.ssaca.model.service.UserService;
+import com.ssaca.util.JWTUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
@@ -10,7 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -20,6 +24,9 @@ public class UserRestController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    JWTUtil jwtUtil;
 
     // 전체 회원 조회
     @GetMapping("/list")
@@ -75,13 +82,23 @@ public class UserRestController {
     // 로그인
     @PostMapping("/login")
     @Operation(summary = "로그인")
-    public ResponseEntity<?> login(@RequestBody User user, HttpSession session) {
-        User loginUser = userService.login(user);
-        if (loginUser == null)
-            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> login(@RequestBody User user) throws UnsupportedEncodingException {
 
-        session.setAttribute("loginUser", loginUser);
-        return new ResponseEntity<User>(loginUser, HttpStatus.OK);
+        Map<String, Object> result = new HashMap<>();
+
+        HttpStatus status = null;
+
+        User loginUser = userService.selectOne(user.getId());
+        if(loginUser != null && loginUser.getPassword().equals(user.getPassword())){
+            result.put("access-token", jwtUtil.createToken("id", user.getId()));
+            result.put("message", "success");
+            status = HttpStatus.ACCEPTED;
+        }else{
+            result.put("message", "fail");
+            status = HttpStatus.NO_CONTENT;
+        }
+
+        return new ResponseEntity<>(result, status);
     }
 
     // 로그아웃
