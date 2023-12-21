@@ -28,6 +28,13 @@ public class BoardRestController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/board/user/{userId}")
+    @Operation(summary = "작성한 게시글 조회")
+    public ResponseEntity<?> getUserBoard(@PathVariable String userId){
+        List<Board> result = boardService.selectUser(userId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @GetMapping("/board/{id}")
     @Operation(summary = "게시글 상세 조회")
     public ResponseEntity<?> getBoard(@PathVariable int id) {

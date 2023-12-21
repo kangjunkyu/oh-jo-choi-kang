@@ -20,6 +20,11 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public List<Board> selectUser(String userId) {
+        return dao.selectUser(userId);
+    }
+
+    @Override
     public Board selectOne(int id) {
         return dao.selectOne(id);
     }

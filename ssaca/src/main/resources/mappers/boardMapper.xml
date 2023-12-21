@@ -9,6 +9,12 @@
         SELECT * FROM board;
     </select>
 
+    <!-- 작성한 게시글 조회 -->
+    <select id="selectUser" parameterType="String" resultType="Board">
+        SELECT * FROM board
+        WHERE writer = #{userId};
+    </select>
+
     <!-- 게시글 상세 조회 -->
     <select id="selectOne" parameterType="int" resultType="Board">
         SELECT * FROM board
