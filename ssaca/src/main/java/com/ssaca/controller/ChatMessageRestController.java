@@ -1,5 +1,9 @@
 package com.ssaca.controller;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import com.ssaca.model.dto.ChatMessage;
 import com.ssaca.model.dto.ChatRoom;
 import com.ssaca.model.service.ChatMessageService;
