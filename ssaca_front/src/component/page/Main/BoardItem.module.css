@@ -1,0 +1,22 @@
+img {
+  height: 100px;
+  width: 100px;
+}
+
+.BoardItem {
+  display: flex;
+  flex-direction: row;
+}
+.cardContainer {
+  display: flex;
+  flex-direction: row;
+}
+.card {
+  display: flex;
+  flex-direction: row;
+  text-align: cen;
+}
+
+/* <div className="BoardItem">
+<div className="cardContainer">
+  <div className="card"> */
