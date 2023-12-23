@@ -1,15 +1,22 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import MainPage from "./component/page/Main/MainPage";
-import FooterView from "./component/ui/FooterView";
 import HeaderView from "./component/ui/HeaderView";
+import Login from "./component/page/User/Login";
+import Regist from "./component/page/User/Regist";
 
 function App() {
   return (
-    <div className="App">
-      <HeaderView />
-      <MainPage />
-      <FooterView />
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <HeaderView />
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/regist" element={<Regist />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 

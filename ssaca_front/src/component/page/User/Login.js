@@ -1,7 +1,10 @@
 import { useState } from "react";
+import axios from "axios";
 import "./Login.css";
 
 const Login = () => {
+  const API = "/";
+
   const [state, setState] = useState({
     id: "",
     password: "",
@@ -13,17 +16,39 @@ const Login = () => {
     console.log("id : ", state.id);
     console.log("password : ", state.password);
 
-    // 어딘가로 보낼거아냐 근데 그게 어딘지 모르니까..
+    axios
+      .post(`${API}/login`, {
+        id: state.id,
+        password: state.password,
+        nickname: state.nickname,
+      })
+      .then((response) => {
+        if (response.headers["message"] === "success") {
+          console.log("login-success");
+          sessionStorage.setItem(
+            "accessToken",
+            response.headers["access-token"]
+          );
+          sessionStorage.setItem("nickname", state.nickname);
+          sessionStorage.setItem("isLogin", true);
+        } else {
+          console.log("login-fail");
+        }
+      })
+      .catch(() => {
+        console.log("login-catch");
+      });
   };
 
   return (
     <div className="Login">
-      <h1>SSACA</h1>
+      <h2>SSACA</h2>
       <form onSubmit={doLogin}>
         <h4>싸카에 오신 것을 환영합니다.</h4>
         <input
           type="text"
           id="id"
+          placeholder="아이디"
           value={state.id}
           onChange={(e) => {
             setState({ ...state, id: e.target.value });
@@ -32,6 +57,7 @@ const Login = () => {
 
         <input
           type="password"
+          placeholder="비밀번호"
           value={state.password}
           onChange={(e) => {
             setState({

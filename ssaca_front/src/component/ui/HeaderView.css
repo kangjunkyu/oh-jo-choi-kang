@@ -1,20 +1,26 @@
-#header {
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+.HeaderView {
+  font-family: "Roboto", sans-serif;
   display: flex;
-  flex-direction: row;
+  align-items: center;
   justify-content: space-between;
   height: 100px;
-  background-color: blue;
+  background-color: rgb(233, 233, 233);
 }
-#logo {
+.Logo {
   display: flex;
-  flex-direction: row;
-}
-
-#menu {
-  display: flex;
-  flex-direction: row;
-}
-
-div {
+  padding: 20px;
   font-size: 30px;
+  font-weight: bold;
+}
+
+.Menu {
+  display: flex;
+  padding: 20px;
+}
+
+.Menu a {
+  margin-left: 20px;
+  font-size: 25px;
 }
