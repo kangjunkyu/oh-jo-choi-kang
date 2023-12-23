@@ -10,6 +10,7 @@
 }
 .Logo {
   display: flex;
+<<<<<<< HEAD
   padding: 20px;
   font-size: 30px;
   font-weight: bold;
@@ -24,3 +25,16 @@
   margin-left: 20px;
   font-size: 25px;
 }
+=======
+  flex-direction: row;
+}
+
+#menu {
+  display: flex;
+  flex-direction: row;
+}
+
+/* div {
+  font-size: 30px;
+} */
+>>>>>>> 9f5c2285e19ea88723d0540c7f1eddb98b041ed0

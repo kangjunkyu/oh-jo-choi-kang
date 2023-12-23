@@ -105,6 +105,10 @@ public class UserRestController {
     @PostMapping("/logout")
     @Operation(summary = "로그아웃")
     public ResponseEntity<Void> logout(HttpSession session) {
+        String str = (String) session.getAttribute("loginUser");
+        if (str == null) {
+            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+        }
         session.invalidate();
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
