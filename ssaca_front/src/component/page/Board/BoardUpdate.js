@@ -74,6 +74,7 @@ const BoardUpdate = ({ onEdit, boardDetail }) => {
           onChange={handleChangeState}
         />
       </div>
+
       <div>
         <button onClick={handleSubmit}>게시글 수정하기</button>
       </div>

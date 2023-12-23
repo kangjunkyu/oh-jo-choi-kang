@@ -17,7 +17,6 @@ const MainPage = () => {
       }
 
       const data = await res.json();
-      console.log(data);
       setBoardData(data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -75,14 +74,9 @@ const MainPage = () => {
       img,
       create_data,
     };
-    console.log(newItem);
-    setBoardData((prevData) => [newItem, ...prevData]);
-  };
+    // console.log(newItem);
 
-  const onRemove2 = (targetId) => {
-    console.log(`${targetId}가 삭제되었습니다.`);
-    const newDiaryList = boardData.filter((it) => it.id !== targetId);
-    setBoardData(newDiaryList);
+    setBoardData((prevData) => [newItem, ...prevData]);
   };
 
   const onRemove = async (selectedBoardId) => {
@@ -95,6 +89,10 @@ const MainPage = () => {
             "Content-Type": "application/json",
           },
         }
+      );
+
+      setBoardData((prevData) =>
+        prevData.filter((item) => item.id !== selectedBoardId)
       );
       if (response.ok) {
         console.log("삭제 성공");
@@ -115,11 +113,12 @@ const MainPage = () => {
         },
         body: JSON.stringify(updatedData),
       });
-
+      console.log(response);
       if (response.ok) {
-        const newData = await response.json();
+        // const newData = await response.json();
 
-        console.log(newData);
+        // console.log(newData);
+        console.log("요청성공");
       } else {
         console.error("Error 서버 응답 실패");
       }

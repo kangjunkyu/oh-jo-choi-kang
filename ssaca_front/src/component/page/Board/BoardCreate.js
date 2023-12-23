@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 const BoardCreate = ({ onCreate, postData }) => {
   const [state, setState] = useState({
@@ -25,6 +25,10 @@ const BoardCreate = ({ onCreate, postData }) => {
       [e.target.name]: e.target.value,
     });
   };
+
+  // useEffect(() => {
+  //   onCreate(state.title, state.content, state.price, state.writer);
+  // }, [onCreate, state]);
 
   const handleSubmit = () => {
     // if (state.title.length < 1) {
