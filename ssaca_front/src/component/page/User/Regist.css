@@ -34,6 +34,14 @@
   padding: 20px;
 }
 
+.Correct {
+  border-color: rgb(29, 93, 255) !important;
+}
+
+.InCorrect {
+  border-color: red !important;
+}
+
 .button-regist {
   border-radius: 5px;
   background-color: black;

@@ -14,4 +14,20 @@ public class Board {
     private int price;
     private String img;
     private String orgImg;
+
+//    public void setImg(String img) {
+//        this.img = img;
+//    }
+//
+//    public String getImg() {
+//        return img;
+//    }
+//
+//    public void setOrgImg(String orgImg) {
+//        this.orgImg = orgImg;
+//    }
+//
+//    public String getOrgImg() {
+//        return orgImg;
+//    }
 }

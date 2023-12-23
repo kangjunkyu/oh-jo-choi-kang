@@ -1,21 +1,36 @@
 import "./Regist.css";
+import axios from "axios";
 import { useState } from "react";
 
 const Regist = () => {
+  const API = "http://localhost:8080/user";
+
   const [state, setState] = useState({
     id: "",
     password: "",
+    pwCorrect: "",
     nickname: "",
   });
 
+  // 회원가입
   const doRegist = (e) => {
     e.preventDefault();
+  };
 
-    console.log("id : ", state.id);
-    console.log("password : ", state.password);
-    console.log("nickname : ", state.nickname);
-
-    // 보내기
+  // 아이디 중복 확인
+  const getId = async () => {
+    try {
+      const response = await axios.get(`${API}/${state.id}`);
+      console.log(response.data["id"]);
+      if (response.data["id"]) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.log("getId Error: ", error);
+      return false;
+    }
   };
 
   return (
@@ -23,7 +38,9 @@ const Regist = () => {
       <h2>SSACA</h2>
       <form onSubmit={doRegist}>
         <h4>회원가입</h4>
+
         <input
+          className={state.id < 1 ? "" : !getId() ? "Correct" : "InCorrect"}
           type="text"
           placeholder="아이디"
           value={state.id}
@@ -34,7 +51,15 @@ const Regist = () => {
             });
           }}
         />
+
         <input
+          className={
+            state.password < 1
+              ? ""
+              : state.password.length > 3
+              ? "Correct"
+              : "InCorrect"
+          }
           type="password"
           placeholder="비밀번호"
           value={state.password}
@@ -45,8 +70,34 @@ const Regist = () => {
             });
           }}
         />
-        <input placeholder="비밀번호 확인" />
+
         <input
+          className={
+            state.pwCorrect < 1
+              ? ""
+              : state.password === state.pwCorrect
+              ? "Correct"
+              : "InCorrect"
+          }
+          type="password"
+          placeholder="비밀번호 확인"
+          value={state.pwCorrect}
+          onChange={(e) => {
+            setState({
+              ...state,
+              pwCorrect: e.target.value,
+            });
+          }}
+        />
+
+        <input
+          className={
+            state.nickname < 1
+              ? ""
+              : state.nickname.length > 3
+              ? "Correct"
+              : "InCorrect"
+          }
           type="text"
           placeholder="닉네임"
           value={state.nickname}

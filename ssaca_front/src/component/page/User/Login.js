@@ -48,7 +48,7 @@ const Login = () => {
       console.log(response.data["nickname"]);
       return response.data["nickname"];
     } catch (error) {
-      console.log("getNickname - catch");
+      console.log("getNickname Error: ", error);
     }
   }
 
