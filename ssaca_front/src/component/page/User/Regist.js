@@ -21,10 +21,11 @@ const Regist = () => {
   const getId = async () => {
     try {
       const response = await axios.get(`${API}/${state.id}`);
-      console.log(response.data["id"]);
       if (response.data["id"]) {
+        console.log("true");
         return true;
       } else {
+        console.log("false");
         return false;
       }
     } catch (error) {
@@ -40,7 +41,7 @@ const Regist = () => {
         <h4>회원가입</h4>
 
         <input
-          className={state.id < 1 ? "" : !getId() ? "Correct" : "InCorrect"}
+          className={state.id < 1 ? "" : getId() ? "InCorrect" : "Correct"}
           type="text"
           placeholder="아이디"
           value={state.id}

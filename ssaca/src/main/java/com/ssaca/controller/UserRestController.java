@@ -44,7 +44,7 @@ public class UserRestController {
     public ResponseEntity<?> selectOne(@PathVariable String id) {
         User user = userService.selectOne(id);
         if (user == null)
-            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
