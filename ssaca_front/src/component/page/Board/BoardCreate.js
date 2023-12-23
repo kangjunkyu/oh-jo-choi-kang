@@ -42,24 +42,24 @@ const BoardCreate = ({ onCreate, postData }) => {
     //   return;
     // }
 
-    onCreate(state.title, state.content, state.price);
+    onCreate(state.title, state.content, state.price, state.writer);
     alert("저장 성공");
     setState({
+      writer: "",
       title: "",
       content: "",
       price: "",
       img: "",
     });
   };
-  const writer1 = "oh";
   const handleSubmit2 = async (e) => {
     e.preventDefault();
 
     const newData = {
       title: titleInput,
-      writer: writer1,
       content: contentInput,
       price: parseInt(priceInput),
+      writer: sessionStorage.getItem("id"),
 
       img: imgInput,
     };
