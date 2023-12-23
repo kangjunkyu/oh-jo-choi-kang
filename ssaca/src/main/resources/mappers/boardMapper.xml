@@ -24,8 +24,8 @@
     <!-- 게시글 추가 -->
     <insert id="insertBoard" parameterType="Board" >
         INSERT INTO board
-        (id, title, writer, content, regDate, viewCnt, price, img, orgImg)
-        VALUES(#{id}, #{title}, #{writer}, #{content}, #{regDate}, #{viewCnt}, #{price}, #{img}, #{orgImg});
+        (title, writer, content, price, img, orgImg)
+        VALUES(#{title}, #{writer}, #{content}, #{price}, #{img}, #{orgImg});
     </insert>
 
     <!-- 게시글 수정 -->
@@ -51,8 +51,8 @@
     <!-- 찜하기 -->
     <insert id="insertWishList" parameterType="wishList">
         INSERT INTO wishList
-        (id, userId, boardId)
-        VALUES (#{id}, #{userId}, #{boardId})
+        (userId, boardId)
+        VALUES (#{userId}, #{boardId})
     </insert>
 
     <!-- 찜삭제 -->

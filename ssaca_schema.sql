@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `ssaca`.`chatMessage` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `ssaca`.`like` (
+CREATE TABLE IF NOT EXISTS `ssaca`.`wishList` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `userId` VARCHAR(45) NOT NULL,
     `boardId` INT NOT NULL,
