@@ -57,7 +57,7 @@ public class BoardRestController {
     // 게시글 등록
     @PostMapping("/board")
     @Operation(summary = "게시글 등록")
-    public ResponseEntity<?> createBoard(@RequestPart Board board, @RequestPart(required = false) MultipartFile file) throws IOException {
+    public ResponseEntity<?> createBoard(@RequestBody Board board, @RequestParam(required = false) MultipartFile file) throws IOException {
         if (file != null && file.getSize()>0) {
             Resource res = resourceLoader.getResource("classpath:/static/upload");
             board.setImg(System.currentTimeMillis() + "_" + file.getOriginalFilename());
