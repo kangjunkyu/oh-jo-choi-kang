@@ -28,8 +28,10 @@ const HeaderView = () => {
         <div className="Menu">
           {nickname !== "" ? (
             <>
-              <h3>{nickname}님, 환영합니다.</h3>
-              <h3 onClick={doLogout}>Logout</h3>
+              <h3 className="Greeting">{nickname}님, 환영합니다.</h3>
+              <h3 className="Logout" onClick={doLogout}>
+                Logout
+              </h3>
               <Link to={"/mypage"}>MyPage</Link>
             </>
           ) : (
