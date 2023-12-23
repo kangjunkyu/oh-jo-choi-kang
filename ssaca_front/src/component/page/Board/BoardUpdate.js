@@ -75,9 +75,6 @@ const BoardUpdate = ({ onEdit, boardDetail }) => {
         />
       </div>
       <div>
-        <input type="file" name="img" onChange={handleChangeState} />
-      </div>
-      <div>
         <button onClick={handleSubmit}>게시글 수정하기</button>
       </div>
     </div>

@@ -14,6 +14,12 @@ const BoardDetail = ({ boardDetail, onEdit, onRemove }) => {
 
   const { id, title, content, price, img } = boardDetail;
 
+  const handleRemove = async (id) => {
+    if (window.confirm("정말로 삭제할껴?")) {
+      await onRemove(id);
+    }
+  };
+
   return (
     <div className="BoardDetail">
       <div>게시글 상세 내역</div>
@@ -22,6 +28,11 @@ const BoardDetail = ({ boardDetail, onEdit, onRemove }) => {
         <div>content : {content}</div>
         <div>price : {price}</div>
         <div>img : {img}</div>
+      </div>
+      <br />
+      <div>
+        <button>수정</button>
+        <button onClick={handleRemove}>삭제</button>
       </div>
     </div>
   );

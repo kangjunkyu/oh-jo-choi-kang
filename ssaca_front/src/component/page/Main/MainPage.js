@@ -79,19 +79,32 @@ const MainPage = () => {
     setBoardData((prevData) => [newItem, ...prevData]);
   };
 
-  const onRemove = (targetId) => {
+  const onRemove2 = (targetId) => {
     console.log(`${targetId}가 삭제되었습니다.`);
     const newDiaryList = boardData.filter((it) => it.id !== targetId);
     setBoardData(newDiaryList);
   };
 
-  // const onEdit = (targetId, newContent) => {
-  //   setBoardData(
-  //     boardData.map((it) =>
-  //       it.id === targetId ? { ...it, content: newContent } : it
-  //     )
-  //   );
-  // };
+  const onRemove = async (selectedBoardId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/board/${selectedBoardId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        console.log("삭제 성공");
+      } else {
+        console.error("삭제 실패");
+      }
+    } catch (error) {
+      console.error("요청 중 오류 발생", error);
+    }
+  };
 
   const onEdit = async (updatedData) => {
     try {
@@ -145,7 +158,7 @@ const MainPage = () => {
         {selectedBoardId && (
           <BoardDetail
             boardDetail={(getBoardDetail(selectedBoardId), boardDetailData)}
-            onRemove={onRemove}
+            onRemove={() => onRemove(selectedBoardId)}
             onEdit={onEdit}
             boardDetailData={boardDetailData}
           />
@@ -155,8 +168,7 @@ const MainPage = () => {
       <BoardUpdate
         onEdit={onEdit}
         getDetailData={getDetailData}
-        boardDetail={(getBoardDetail(selectedBoardId), boardDetailData)}
-        boardDetailData={boardDetailData}
+        boardDetail={boardDetailData}
       />
     </div>
   );

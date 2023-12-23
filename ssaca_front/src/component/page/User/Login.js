@@ -29,6 +29,8 @@ const Login = () => {
 
         sessionStorage.setItem("nickname", nickname);
         sessionStorage.setItem("isLogin", true);
+        sessionStorage.setItem("id", state.id);
+
         console.log("login-success-end"); // 실행 순서: 4
         window.location.href = "/";
       } else {
