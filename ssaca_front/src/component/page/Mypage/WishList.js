@@ -6,7 +6,7 @@ const WishList = ({ myWishList}) => {
       
       <h4>{myWishList.length}개의 상품을 찜했습니다.</h4>
 
-      <ul className="MyWish">
+      <ul className="BoardListItem">
         {myWishList.map((it) => (
           <Wish
             key={it.id}

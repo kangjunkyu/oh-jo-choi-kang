@@ -23,15 +23,15 @@ const Mypage = () => {
   }, [userId]); // userId를 useEffect의 의존성으로 추가
 
 
-  const getWishList = async () =>{
-    try{
+  const getWishList = async () => {
+    try {
       const result = await axios.get("http://localhost:8080/api/board/wishList", {
-      params: {
-        userId: userId,
-      },
-    });
+        params: {
+          userId: userId,
+        },
+      });
       setWishData(result.data);
-    }catch(error){
+    } catch (error) {
       console.error("데이터를 불러오는 중 에러", error)
     }
   };
@@ -42,8 +42,13 @@ const Mypage = () => {
 
   return (
     <div>
-      <MyBoardList myBoardList={boardData} />
-      <WishList myWishList={wishData}/>
+
+      <div>
+        <MyBoardList myBoardList={boardData} />
+      </div>
+      <div>
+        <WishList myWishList={wishData} />
+      </div>
     </div>
   );
 };

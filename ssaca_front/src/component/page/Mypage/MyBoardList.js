@@ -6,7 +6,7 @@ const MyBoardList = ({ myBoardList, onDetail, onItemClick }) => {
       
       <h4>{myBoardList.length}개의 게시글을 작성하였습니다.</h4>
 
-      <ul className="MyBoard">
+      <ul className="BoardListItem">
         {myBoardList.map((it) => (
           <MyBoardItem
             key={it.id}
