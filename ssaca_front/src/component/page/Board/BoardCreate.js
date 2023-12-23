@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-const BoardCreate = ({ onCreate }) => {
+const BoardCreate = ({ onCreate, postData }) => {
   const [state, setState] = useState({
     id: "",
     title: "",
@@ -14,10 +14,10 @@ const BoardCreate = ({ onCreate }) => {
   });
 
   const idInput = useRef();
-  const titleInput = useRef();
-  const contentInput = useRef();
-  const priceInput = useRef();
-  const imgInput = useRef();
+  const [titleInput, setTitleInput] = useState("");
+  const [contentInput, setContentInput] = useState("");
+  const [priceInput, setPriceInput] = useState();
+  const [imgInput, setImgInput] = useState("");
 
   const handleChangeState = (e) => {
     setState({
@@ -51,70 +51,82 @@ const BoardCreate = ({ onCreate }) => {
       img: "",
     });
   };
-
-  const handleSubmit2 = (e) => {
+  const writer1 = "oh";
+  const handleSubmit2 = async (e) => {
     e.preventDefault();
-    fetch("http://localhost:8080/api/board", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify(state),
-    })
-      .then((res) => {
-        // console.log(res);
-        return res.json();
-      })
-      .then((res) => {
-        // console.log(res);
-      });
 
-    onCreate(state.title, state.content, state.price, state.img);
-    alert("저장 성공");
-    setState({
-      title: "",
-      content: "",
-      price: "",
-      img: "",
-    });
+    const newData = {
+      title: titleInput,
+      writer: writer1,
+      content: contentInput,
+      price: parseInt(priceInput),
+
+      img: imgInput,
+    };
+    // onCreate(state.title, state.content, state.price, state.img);
+    // alert("저장 성공");
+    // setState({
+    //   title: "",
+    //   content: "",
+    //   price: "",
+    //   img: "",
+    // });
+    console.log(newData);
+    console.log(localStorage);
+    const response = await postData(newData);
+    console.log(response);
   };
 
   return (
-    <div className="BoardCreate">
-      <div className="title">게시글 등록</div>
-      <div>
-        <input
-          placeholder="title"
-          value={state.title}
-          ref={titleInput}
-          name="title"
-          onChange={handleChangeState}
-        />
-      </div>
-      <div>
-        <textarea
-          placeholder="content"
-          value={state.content}
-          ref={contentInput}
-          name="content"
-          onChange={handleChangeState}
-        />
-      </div>
-      <div>
-        <input
-          placeholder="price"
-          value={state.price}
-          ref={priceInput}
-          name="price"
-          onChange={handleChangeState}
-        />
-      </div>
-      <div>
-        <input type="file" name="file" onChange={handleChangeState}></input>
-      </div>
-      <div>
-        <button onClick={handleSubmit2}>게시글 저장하기</button>
-      </div>
+    <div>
+      <form onSubmit={handleSubmit2}>
+        <div className="BoardCreate">
+          <div className="title">게시글 등록</div>
+          <div>
+            <input
+              placeholder="title"
+              // value={state.title}
+              value={titleInput}
+              name="title"
+              // onChange={handleChangeState}
+              onChange={(e) => setTitleInput(e.target.value)}
+            />
+          </div>
+          <div>
+            <textarea
+              placeholder="content"
+              // value={state.content}
+              value={contentInput}
+              // ref={contentInput}
+              name="content"
+              // onChange={handleChangeState}
+              onChange={(e) => setContentInput(e.target.value)}
+            />
+          </div>
+          <div>
+            <input
+              placeholder="price"
+              // value={state.price}
+              value={priceInput}
+              // ref={priceInput}
+              name="price"
+              // onChange={handleChangeState}
+              onChange={(e) => setPriceInput(e.target.value)}
+            />
+          </div>
+          <div>
+            <input
+              type="file"
+              name="file"
+              // onChange={handleChangeState}>
+              onChange={(e) => setImgInput(e.target.value)}
+            ></input>
+          </div>
+          <div>
+            <button onClick={handleSubmit2}>게시글 저장하기</button>
+          </div>
+        </div>
+      </form>
     </div>
   );
 };

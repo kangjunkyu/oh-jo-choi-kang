@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-const BoardUpdate = ({ onEdit }) => {
+const BoardUpdate = ({ onEdit, boardDetail }) => {
   const [state, setState] = useState({
     id: "",
     title: "",
@@ -9,48 +9,41 @@ const BoardUpdate = ({ onEdit }) => {
     regDate: "",
     viewCnt: 0,
     price: "",
-    img: "",
+    img: null, // URL이나 문자열 대신 파일 객체
     orgImg: "",
   });
 
-  const idInput = useRef();
+  useEffect(() => {
+    if (boardDetail) {
+      setState({
+        id: boardDetail.id,
+        title: boardDetail.title,
+        content: boardDetail.content,
+        price: boardDetail.price,
+        img: null,
+        orgImg: boardDetail.orgImg,
+      });
+    }
+  }, [boardDetail]);
+
   const titleInput = useRef();
   const contentInput = useRef();
   const priceInput = useRef();
-  const imgInput = useRef();
 
   const handleChangeState = (e) => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value, files } = e.target;
+
+    setState((prevState) => ({
+      ...prevState,
+      [name]: files ? files[0] : value, // 파일 입력인 경우 파일을 저장하고, 그렇지 않은 경우 값 저장
+    }));
   };
 
   const handleSubmit = () => {
-    // if (state.title.length < 1) {
-    //   titleInput.current.focus();
-    //   return;
-    // }
-
-    // if (state.content.length < 5) {
-    //   contentInput.current.focus();
-    //   return;
-    // }
-
-    // if (state.price.length <= 0) {
-    //   priceInput.current.focus();
-    //   return;
-    // }
-
-    onEdit(state.title, state.content, state.price);
-    alert("저장 성공");
-    setState({
-      title: "",
-      content: "",
-      price: "",
-      img: "",
-    });
+    onEdit(state);
+    alert("수정 성공");
   };
+
   return (
     <div className="BoardCreate">
       <div className="title">게시글 수정</div>
@@ -82,7 +75,7 @@ const BoardUpdate = ({ onEdit }) => {
         />
       </div>
       <div>
-        <input type="file" name="file" onChange={handleChangeState}></input>
+        <input type="file" name="img" onChange={handleChangeState} />
       </div>
       <div>
         <button onClick={handleSubmit}>게시글 수정하기</button>
@@ -90,4 +83,5 @@ const BoardUpdate = ({ onEdit }) => {
     </div>
   );
 };
+
 export default BoardUpdate;

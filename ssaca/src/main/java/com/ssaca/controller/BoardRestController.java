@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @Tag(name = "게시글 컨트롤러")
+@CrossOrigin("*")
 public class BoardRestController {
 
     @Autowired

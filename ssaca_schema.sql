@@ -1,4 +1,5 @@
 -- MySQL Workbench Forward Engineering
+Drop Database IF EXISTS ssaca;
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -95,17 +96,17 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `ssaca`.`wishList` (
     `id` INT NOT NULL AUTO_INCREMENT,
-    `userId` VARCHAR(45) NOT NULL,
+    `userId` VARCHAR(255) NOT NULL,
     `boardId` INT NOT NULL,
     PRIMARY KEY (`id`),
     INDEX `fk_like_user_idx` (`userId` ASC) VISIBLE,
     INDEX `fk_like_board_idx` (`boardId` ASC) VISIBLE,
-    CONSTRAINT `fk_like_user`
+    CONSTRAINT `fk_like_user_wishlist`
         FOREIGN KEY (`userId`)
         REFERENCES `ssaca`.`user` (`id`)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
-    CONSTRAINT `fk_like_board`
+    CONSTRAINT `fk_like_board_wishlist`
         FOREIGN KEY (`boardId`)
         REFERENCES `ssaca`.`board` (`id`)
         ON DELETE CASCADE
@@ -116,6 +117,3 @@ CREATE TABLE IF NOT EXISTS `ssaca`.`wishList` (
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-INSERT INTO 
-

@@ -17,7 +17,7 @@ const MainPage = () => {
       }
 
       const data = await res.json();
-      // console.log(data);
+      console.log(data);
       setBoardData(data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -40,6 +40,27 @@ const MainPage = () => {
       console.error("Error fetching data:", error);
     }
   };
+
+  const postData = async (requestData) => {
+    try {
+      const response = await fetch("http://localhost:8080/api/board", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+    } catch (err) {
+      console.error("Error during POST request:", err);
+    }
+  };
+
+  // const requestData = { key: "id" };
+  // postData(requestData);
 
   useEffect(() => {
     getData();
@@ -64,12 +85,34 @@ const MainPage = () => {
     setBoardData(newDiaryList);
   };
 
-  const onEdit = (targetId, newContent) => {
-    setBoardData(
-      boardData.map((it) =>
-        it.id === targetId ? { ...it, content: newContent } : it
-      )
-    );
+  // const onEdit = (targetId, newContent) => {
+  //   setBoardData(
+  //     boardData.map((it) =>
+  //       it.id === targetId ? { ...it, content: newContent } : it
+  //     )
+  //   );
+  // };
+
+  const onEdit = async (updatedData) => {
+    try {
+      const response = await fetch("http://localhost:8080/api/board", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+      });
+
+      if (response.ok) {
+        const newData = await response.json();
+
+        console.log(newData);
+      } else {
+        console.error("Error 서버 응답 실패");
+      }
+    } catch (error) {
+      console.error("요청 중 오류 발생", error);
+    }
   };
 
   const getBoardDetail = (id) => {
@@ -108,8 +151,13 @@ const MainPage = () => {
           />
         )}
       </div>
-      <BoardCreate onCreate={onCreate} />
-      <BoardUpdate onEdit={onEdit} />
+      <BoardCreate onCreate={onCreate} postData={postData} />
+      <BoardUpdate
+        onEdit={onEdit}
+        getDetailData={getDetailData}
+        boardDetail={(getBoardDetail(selectedBoardId), boardDetailData)}
+        boardDetailData={boardDetailData}
+      />
     </div>
   );
 };
