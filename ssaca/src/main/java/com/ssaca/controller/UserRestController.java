@@ -90,10 +90,12 @@ public class UserRestController {
 
         User loginUser = userService.selectOne(user.getId());
         if(loginUser != null && loginUser.getPassword().equals(user.getPassword())){
+            System.out.println("success"); //
             result.put("access-token", jwtUtil.createToken("id", user.getId()));
             result.put("message", "success");
             status = HttpStatus.ACCEPTED;
         }else{
+            System.out.println("fail"); //
             result.put("message", "fail");
             status = HttpStatus.NO_CONTENT;
         }

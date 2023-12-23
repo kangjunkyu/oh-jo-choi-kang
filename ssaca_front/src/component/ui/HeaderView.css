@@ -17,6 +17,7 @@
 
 .Menu {
   display: flex;
+  align-items: center;
   padding: 20px;
 }
 
@@ -25,8 +26,15 @@
   font-size: 25px;
 }
 
-Menu {
-  display: flex;
+.Greeting {
+  margin-left: 20px;
+  font-size: 20px;
+}
+
+.Logout {
+  margin-left: 20px;
+  font-size: 25px;
+  cursor: pointer;
 }
 
 /* div {

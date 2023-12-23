@@ -3,42 +3,54 @@ import axios from "axios";
 import "./Login.css";
 
 const Login = () => {
-  const API = "/";
+  const API = "http://localhost:8080/user";
 
   const [state, setState] = useState({
     id: "",
     password: "",
   });
 
-  const doLogin = (e) => {
+  // 로그인
+  async function doLogin(e) {
     e.preventDefault();
 
-    console.log("id : ", state.id);
-    console.log("password : ", state.password);
-
-    axios
-      .post(`${API}/login`, {
+    try {
+      const response = await axios.post(`${API}/login`, {
         id: state.id,
         password: state.password,
         nickname: state.nickname,
-      })
-      .then((response) => {
-        if (response.headers["message"] === "success") {
-          console.log("login-success");
-          sessionStorage.setItem(
-            "accessToken",
-            response.headers["access-token"]
-          );
-          sessionStorage.setItem("nickname", state.nickname);
-          sessionStorage.setItem("isLogin", true);
-        } else {
-          console.log("login-fail");
-        }
-      })
-      .catch(() => {
-        console.log("login-catch");
       });
-  };
+
+      if (response.data["message"] === "success") {
+        console.log("login-success"); // 실행 순서: 1
+        sessionStorage.setItem("accessToken", response.data["access-token"]);
+
+        const nickname = await getNickname();
+
+        sessionStorage.setItem("nickname", nickname);
+        sessionStorage.setItem("isLogin", true);
+        console.log("login-success-end"); // 실행 순서: 4
+        window.location.href = "/";
+      } else {
+        console.log("login-fail"); //
+      }
+    } catch (error) {
+      console.log("login-catch"); //
+    }
+  }
+
+  // 유저 닉네임 얻어오기
+  async function getNickname() {
+    console.log("getNickname"); // 실행 순서: 2
+    try {
+      const response = await axios.get(`${API}/${state.id}`);
+      console.log("getNickname - then"); // 실행 순서: 3
+      console.log(response.data["nickname"]);
+      return response.data["nickname"];
+    } catch (error) {
+      console.log("getNickname - catch");
+    }
+  }
 
   return (
     <div className="Login">
