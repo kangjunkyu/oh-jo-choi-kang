@@ -10,9 +10,15 @@ const BoardItem = ({
   price,
   img,
   orgImg,
+  onItemClick,
 }) => {
+  const handleClick = () => {
+    console.log(`Item clicked: ${id}`);
+    onItemClick(id);
+  };
+
   return (
-    <div className="card">
+    <div className="card" onClick={handleClick}>
       <img src={img} />
       <br />
       <div>
