@@ -1,12 +1,9 @@
-<<<<<<< HEAD
-=======
 import BoardCreate from "../Board/BoardCreate";
 import BoardUpdate from "../Board/BoardUpdate";
 import BoardList from "./BoardList";
 import BoardDetail from "../Board/BoardDetail";
 import React, { useEffect, useState } from "react";
 
->>>>>>> 9f5c2285e19ea88723d0540c7f1eddb98b041ed0
 const MainPage = () => {
   const [boardData, setBoardData] = useState([]);
   const [selectedBoardId, setSelectedBoardId] = useState(null);
