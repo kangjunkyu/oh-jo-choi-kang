@@ -19,7 +19,9 @@ const BoardItem = ({
 
   return (
     <div className="card" onClick={handleClick}>
-      <img src={img} />
+      <div>
+        <img src={img} />
+      </div>
       <br />
       <div>
         <div>{title}</div>
@@ -27,6 +29,8 @@ const BoardItem = ({
         <div>{price}</div>
         <br />
         <div>{new Date(regDate).toLocaleString()}</div>
+        <br />
+        <div>{viewCnt}</div>
       </div>
     </div>
   );

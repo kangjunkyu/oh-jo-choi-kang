@@ -29,6 +29,10 @@ public class BoardRestController {
 
     @Autowired
     ResourceLoader resourceLoader;
+    public ResponseEntity<?> exceptionHandling(Exception e) {
+        e.printStackTrace();
+        return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @GetMapping("/board")
     @Operation(summary = "게시글 전체 조회")
@@ -57,15 +61,26 @@ public class BoardRestController {
     // 게시글 등록
     @PostMapping("/board")
     @Operation(summary = "게시글 등록")
-    public ResponseEntity<?> createBoard(@RequestBody Board board, @RequestParam(required = false) MultipartFile file) throws IOException {
-        if (file != null && file.getSize()>0) {
-            Resource res = resourceLoader.getResource("classpath:/static/upload");
-            board.setImg(System.currentTimeMillis() + "_" + file.getOriginalFilename());
-            board.setOrgImg(file.getOriginalFilename());
-            file.transferTo(new File(res.getFile().getCanonicalFile() + "/" + board.getImg()));
+    public ResponseEntity<?> createBoard(@ModelAttribute Board board, @RequestParam(required = false) MultipartFile file) throws IOException, IllegalStateException{
+        try {
+            if (file != null && file.getSize() > 0) {
+                Resource res = resourceLoader.getResource("classpath:/static/upload");
+                board.setImg(System.currentTimeMillis() + "_" + file.getOriginalFilename());
+                board.setOrgImg(file.getOriginalFilename());
+                file.transferTo(new File(res.getFile().getCanonicalFile() + "/" + board.getImg()));
+            }
+            int result = boardService.insertBoard(board);
+            if(result == 0){
+                return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+            }else{
+                return new ResponseEntity<Board>(board, HttpStatus.OK);
+            }
         }
-        int result = boardService.insertBoard(board);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        catch (Exception e){
+            return exceptionHandling(e);
+        }
+
+//        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @DeleteMapping("/board/{id}")

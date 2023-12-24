@@ -2,15 +2,6 @@ const BoardDetail = ({ boardDetail, onEdit, onRemove }) => {
   if (!boardDetail) {
     return <div>게시글이 선택되지 않았습니다.</div>;
   }
-  // id: "",
-  // title: "",
-  // content: "",
-  // writer: "",
-  // regDate: "",
-  // viewCnt: 0,
-  // price: "",
-  // img: "",
-  // orgImg: "",
 
   const { id, title, content, price, img } = boardDetail;
 
