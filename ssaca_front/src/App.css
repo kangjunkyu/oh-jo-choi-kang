@@ -74,6 +74,8 @@ textarea {
 }
 
 .BoardDetail {
+  border: solid 1px gray;
+  width: 80%;
 }
 
 .BoardDetail img {
@@ -109,9 +111,12 @@ textarea {
   font-size: 20px;
   padding: 15px;
   margin-top: 10px;
-  margin-left: 100px;
-  width: 400px;
+  margin-left: 20px;
+  width: 200px;
   border: solid 1px gray;
+}
+.BoardDetail .right .innerButton {
+  display: flex;
 }
 
 .BoardDetail .button {
