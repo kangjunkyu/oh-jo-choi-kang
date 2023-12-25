@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import "./HeaderView.css";
 
 const HeaderView = () => {
@@ -15,8 +16,16 @@ const HeaderView = () => {
   // 로그아웃
   const doLogout = () => {
     sessionStorage.setItem("isLogin", false);
+    sessionStorage.removeItem("id");
     sessionStorage.removeItem("nickname");
-    window.location.href = "/";
+    Swal.fire({
+      icon: "success",
+      title: "로그아웃 되었습니다.",
+      showCancelButton: false,
+      confirmButtonText: "닫기",
+    }).then(() => {
+      window.location.href = "/";
+    });
   };
 
   return (

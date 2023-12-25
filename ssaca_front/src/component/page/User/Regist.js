@@ -1,5 +1,6 @@
 import "./Regist.css";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
 
 const Regist = () => {
@@ -23,8 +24,15 @@ const Regist = () => {
         password: state.password,
         nickname: state.nickname,
       });
-      console.log(response);
-      window.location.href = "/";
+      Swal.fire({
+        icon: "success",
+        title: "가입 성공",
+        text: "SSACA에 오신 것을 환영합니다!",
+        showCancelButton: false,
+        confirmButtonText: "닫기",
+      }).then(() => {
+        window.location.href = "/";
+      });
     } catch (error) {
       console.log("Regist - Error : ", error);
     }
