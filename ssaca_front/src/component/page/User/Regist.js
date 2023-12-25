@@ -1,6 +1,6 @@
 import "./Regist.css";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Regist = () => {
   const API = "http://localhost:8080/user";
@@ -10,6 +10,7 @@ const Regist = () => {
     password: "",
     pwCorrect: "",
     nickname: "",
+    isExist: false,
   });
 
   // 회원가입
@@ -30,7 +31,15 @@ const Regist = () => {
   }
 
   // 아이디 중복 확인
+  useEffect(() => {
+    getStatus();
+  }, [state.id]);
+
   const getStatus = async () => {
+    setState({
+      ...state,
+      isExist: await getId(),
+    });
     const isExist = await getId();
     console.log("isExist: ", isExist);
     return isExist ? "InCorrect" : "Correct";
@@ -42,7 +51,7 @@ const Regist = () => {
       console.log(state.id);
       return response.status === 200 ? true : false;
     } catch (error) {
-      console.log("getId Error: ", error);
+      console.log("getId - Error : ", error);
       return false;
     }
   };
@@ -54,7 +63,9 @@ const Regist = () => {
         <h4>회원가입</h4>
 
         <input
-          className={state.id < 1 ? "" : getStatus()}
+          className={
+            state.id < 1 ? "" : state.isExist ? "InCorrect" : "Correct"
+          }
           type="text"
           placeholder="아이디"
           value={state.id}
@@ -65,6 +76,13 @@ const Regist = () => {
             });
           }}
         />
+        <span>
+          {state.id < 1
+            ? ""
+            : state.isExist
+            ? "이미 존재하는 아이디입니다."
+            : ""}
+        </span>
 
         <input
           className={
@@ -85,6 +103,14 @@ const Regist = () => {
           }}
         />
 
+        <span>
+          {state.password < 1
+            ? ""
+            : state.password.length > 3
+            ? ""
+            : "비밀번호를 4글자 이상 입력해주세요."}
+        </span>
+
         <input
           className={
             state.pwCorrect < 1
@@ -104,6 +130,14 @@ const Regist = () => {
           }}
         />
 
+        <span>
+          {state.pwCorrect < 1
+            ? ""
+            : state.password === state.pwCorrect
+            ? ""
+            : "비밀번호가 다릅니다."}
+        </span>
+
         <input
           className={
             state.nickname < 1
@@ -122,7 +156,32 @@ const Regist = () => {
             });
           }}
         />
-        <button className="button-regist" type="submit">
+        <span>
+          {state.nickname < 1
+            ? ""
+            : state.nickname.length > 2
+            ? ""
+            : "닉네임을 3글자 이상 입력해주세요."}
+        </span>
+        <button
+          className={
+            !state.isExist &&
+            state.password.length > 3 &&
+            state.password === state.pwCorrect &&
+            state.nickname.length > 2
+              ? "button-regist"
+              : "button-regist-disable"
+          }
+          type="submit"
+          disable={
+            !state.isExist &&
+            state.password.length > 3 &&
+            state.password === state.pwCorrect &&
+            state.nickname.length > 2
+              ? ""
+              : "disable"
+          }
+        >
           회원가입
         </button>
       </form>
