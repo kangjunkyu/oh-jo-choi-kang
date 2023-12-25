@@ -13,21 +13,34 @@ const Regist = () => {
   });
 
   // 회원가입
-  const doRegist = (e) => {
+  async function doRegist(e) {
     e.preventDefault();
-  };
+
+    try {
+      const response = await axios.post(`${API}/`, {
+        id: state.id,
+        password: state.password,
+        nickname: state.nickname,
+      });
+      console.log(response);
+      window.location.href = "/";
+    } catch (error) {
+      console.log("Regist - Error : ", error);
+    }
+  }
 
   // 아이디 중복 확인
+  const getStatus = async () => {
+    const isExist = await getId();
+    console.log("isExist: ", isExist);
+    return isExist ? "InCorrect" : "Correct";
+  };
+
   const getId = async () => {
     try {
       const response = await axios.get(`${API}/${state.id}`);
-      if (response.data["id"]) {
-        console.log("true");
-        return true;
-      } else {
-        console.log("false");
-        return false;
-      }
+      console.log(state.id);
+      return response.status === 200 ? true : false;
     } catch (error) {
       console.log("getId Error: ", error);
       return false;
@@ -41,7 +54,7 @@ const Regist = () => {
         <h4>회원가입</h4>
 
         <input
-          className={state.id < 1 ? "" : getId() ? "InCorrect" : "Correct"}
+          className={state.id < 1 ? "" : getStatus()}
           type="text"
           placeholder="아이디"
           value={state.id}
@@ -95,7 +108,7 @@ const Regist = () => {
           className={
             state.nickname < 1
               ? ""
-              : state.nickname.length > 3
+              : state.nickname.length > 2
               ? "Correct"
               : "InCorrect"
           }
