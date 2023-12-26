@@ -8,9 +8,6 @@ const BoardDetail = ({ boardDetail, onEdit, onRemove }) => {
   const [selectedChatId, setSelectedChatId] = useState(null);
   const [chatDetailData, setChatDetailData] = useState(null);
 
-  useEffect(() => {
-    getData();
-  }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때 한 번만 실행
   if (!boardDetail) {
     return <div>게시글이 선택되지 않았습니다.</div>;
   }
