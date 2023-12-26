@@ -24,6 +24,11 @@ public class ChatRoomServiceImpl implements ChatRoomService{
     }
 
     @Override
+    public int idSearch(String userId, int boardId) {
+        return chatRoomDao.idSearch(userId, boardId);
+    }
+
+    @Override
     public int insertChatRoom(ChatRoom chatRoom) {
         return chatRoomDao.insertChatRoom(chatRoom);
     }

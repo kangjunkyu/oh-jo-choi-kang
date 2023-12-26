@@ -1,6 +1,6 @@
 import Wish from "./Wish";
 
-const WishList = ({ myWishList}) => {
+const WishList = ({ myWishList, onItemClick}) => {
     return (
       <div className="WishList">
       
@@ -11,7 +11,7 @@ const WishList = ({ myWishList}) => {
           <Wish
             key={it.id}
             {...it}
-            
+            onItemClick={onItemClick}
           />
         ))}
       </ul>

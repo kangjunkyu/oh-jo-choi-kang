@@ -25,6 +25,8 @@ const MyBoardItem = ({
         <br />
         <div>{writer}</div>
         <div>{new Date(regDate).toLocaleString()}</div>
+        <br />
+        <div>{viewCnt}</div>
       </div>
     </div>
     );

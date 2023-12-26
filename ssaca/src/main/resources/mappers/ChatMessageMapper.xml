@@ -14,10 +14,10 @@
 
     <insert id="insertMessage" parameterType="ChatMessage" >
         INSERT INTO chatMessage
-        (id, roomId, userId, message, regDate, img, orgImg)
-        VALUES(#{id}, #{roomId}, #{userId}, #{message}, #{regDate}, #{img}, #{orgImg});
+        (roomId, userId, message, img, orgImg)
+        VALUES(#{roomId}, #{userId}, #{message}, #{img}, #{orgImg});
     </insert>
-    
+
     <delete id="deleteMessage" parameterType="int">
         DELETE FROM chatMessage
         WHERE id = #{id};
