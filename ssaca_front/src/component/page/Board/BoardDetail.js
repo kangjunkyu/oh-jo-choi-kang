@@ -103,9 +103,9 @@ const BoardDetail = ({ boardDetail, onEdit, onRemove }) => {
       );
 
       if (response.ok) {
-        console.log("게시글을 찜했습니다.");
+        alert("게시글을 찜했습니다.");
       } else {
-        console.error("게시글 찜하기에 실패했습니다.");
+        alert("게시글 찜하기에 실패했습니다.");
       }
     } catch (error) {
       console.error("요청 중 오류 발생", error);

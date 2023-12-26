@@ -61,26 +61,6 @@ const BoardCreate = ({ onCreate, postData }) => {
       img: state.img,
     };
 
-    // const writeBoard = async () => {
-    //   var frm = new FormData();
-    //   frm.append("title", newData.title);
-    //   console.log(frm);
-    //   frm.append("content", newData.content);
-    //   console.log(frm);
-    //   frm.append("price", newData.price);
-    //   console.log(frm);
-    //   frm.append("writer", newData.writer);
-    //   console.log(frm);
-    //   frm.append("img", newData.img);
-
-    //   console.log(frm);
-    //   postData(frm);
-
-    //   const response = await postData(frm);
-    //   console.log(response);
-    // };
-    // await writeBoard();
-
     var formData = new FormData();
     formData.append("title", newData.title);
     formData.append("content", newData.content);

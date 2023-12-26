@@ -1,3 +1,4 @@
+import { useState } from "react";
 import BoardItem from "./BoardItem";
 const BoardList = ({ boardList, onDetail, onRemove, onEdit, onItemClick }) => {
   return (

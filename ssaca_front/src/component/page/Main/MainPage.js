@@ -3,6 +3,7 @@ import BoardUpdate from "../Board/BoardUpdate";
 import BoardList from "./BoardList";
 import BoardDetail from "../Board/BoardDetail";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const MainPage = () => {
   const [boardData, setBoardData] = useState([]);
@@ -152,14 +153,16 @@ const MainPage = () => {
           onEdit={onEdit}
           onClick={getDetailData}
         />
-        {selectedBoardId && (
-          <BoardDetail
-            boardDetail={(getBoardDetail(selectedBoardId), boardDetailData)}
-            onRemove={() => onRemove(selectedBoardId)}
-            onEdit={onEdit}
-            boardDetailData={boardDetailData}
-          />
-        )}
+        <Link to="/boardDetail/${}">
+          {selectedBoardId && (
+            <BoardDetail
+              boardDetail={(getBoardDetail(selectedBoardId), boardDetailData)}
+              onRemove={() => onRemove(selectedBoardId)}
+              onEdit={onEdit}
+              boardDetailData={boardDetailData}
+            />
+          )}
+        </Link>
       </div>
       <BoardCreate onCreate={onCreate} postData={postData} />
       <BoardUpdate
