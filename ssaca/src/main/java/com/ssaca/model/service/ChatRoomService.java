@@ -12,6 +12,9 @@ public interface ChatRoomService {
     // 채팅방 조회
     ChatRoom selectOne(int id);
 
+    // 중복없도록 채팅방 조회
+    int idSearch(String userId, int boardId);
+
     // 채팅방 생성
     int insertChatRoom(ChatRoom chatRoom);
 

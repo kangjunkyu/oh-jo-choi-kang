@@ -12,10 +12,16 @@
         WHERE id = #{id};
     </select>
 
+    <select id="idSearch" parameterType="ChatRoom" resultType="int">
+        SELECT id FROM chatRoom
+        WHERE userId = #{userId}
+        AND boardId = #{boardId};
+    </select>
+
     <insert id="insertChatRoom" parameterType="ChatRoom" >
         INSERT INTO chatRoom
-        (id, sellerId, userId)
-        VALUES(#{id}, #{sellerId}, #{userId});
+        (sellerId, userId, boardId)
+        VALUES(#{sellerId}, #{userId}, #{boardId});
     </insert>
 
     <delete id="deleteChatRoom" parameterType="int">

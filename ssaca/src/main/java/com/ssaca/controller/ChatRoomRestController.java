@@ -4,6 +4,7 @@ import com.ssaca.model.dto.ChatRoom;
 import com.ssaca.model.service.ChatRoomService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/chat")
 @Tag(name = "채팅방 컨트롤러")
 public class ChatRoomRestController {
@@ -35,6 +37,15 @@ public class ChatRoomRestController {
         if (chatRoom == null)
             return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<ChatRoom>(chatRoom, HttpStatus.OK);
+    }
+
+    @PostMapping("/search")
+    @Operation(summary = "채팅방 존재여부 조회")
+    public ResponseEntity<?> idSearch(@RequestBody ChatRoom chatRoom) {
+        int id = chatRoomService.idSearch(chatRoom.getUserId(), chatRoom.getBoardId());
+        if (id == 0)
+            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<Integer>(id, HttpStatus.OK);
     }
 
     @PostMapping("/")

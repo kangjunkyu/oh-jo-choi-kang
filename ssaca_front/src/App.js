@@ -6,6 +6,7 @@ import HeaderView from "./component/ui/HeaderView";
 import Login from "./component/page/User/Login";
 import Regist from "./component/page/User/Regist";
 import Mypage from "./component/page/Mypage/Mypage"
+import Chat from "./component/page/Chat/ChatDetail"
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/regist" element={<Regist />} />
           <Route path="/mypage" element={<Mypage />} />
+          <Route path="/chat" element={<Chat />} />
 
         </Routes>
       </div>
