@@ -72,7 +72,13 @@ const Regist = () => {
 
         <input
           className={
-            state.id < 1 ? "" : state.isExist ? "InCorrect" : "Correct"
+            state.id < 1
+              ? ""
+              : state.id.length < 4
+              ? "InCorrect"
+              : state.isExist
+              ? "InCorrect"
+              : "Correct"
           }
           type="text"
           placeholder="아이디"
@@ -84,6 +90,13 @@ const Regist = () => {
             });
           }}
         />
+        <span>
+          {state.id < 1
+            ? ""
+            : state.id.length < 4
+            ? "아이디를 4글자 이상 입력해 주세요."
+            : ""}
+        </span>
         <span>
           {state.id < 1
             ? ""
@@ -143,7 +156,7 @@ const Regist = () => {
             ? ""
             : state.password === state.pwCorrect
             ? ""
-            : "비밀번호가 다릅니다."}
+            : "비밀번호가 일치하지 않습니다."}
         </span>
 
         <input
@@ -173,6 +186,7 @@ const Regist = () => {
         </span>
         <button
           className={
+            state.id.length > 3 &&
             !state.isExist &&
             state.password.length > 3 &&
             state.password === state.pwCorrect &&
@@ -182,6 +196,7 @@ const Regist = () => {
           }
           type="submit"
           disable={
+            state.id.length > 3 &&
             !state.isExist &&
             state.password.length > 3 &&
             state.password === state.pwCorrect &&

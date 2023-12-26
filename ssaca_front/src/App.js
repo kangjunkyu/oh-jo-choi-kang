@@ -5,7 +5,8 @@ import MainPage from "./component/page/Main/MainPage";
 import HeaderView from "./component/ui/HeaderView";
 import Login from "./component/page/User/Login";
 import Regist from "./component/page/User/Regist";
-import Mypage from "./component/page/Mypage/Mypage"
+import Mypage from "./component/page/Mypage/Mypage";
+import Kakao from "./component/page/User/Kakao";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/regist" element={<Regist />} />
           <Route path="/mypage" element={<Mypage />} />
-
+          <Route path="oauth/kakao" element={<Kakao />} />
         </Routes>
       </div>
     </BrowserRouter>

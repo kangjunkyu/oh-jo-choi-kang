@@ -1,5 +1,4 @@
 import { useState } from "react";
-import KakaoLogin from "react-kakao-login";
 import axios from "axios";
 import Swal from "sweetalert2";
 import "./Login.css";
@@ -14,58 +13,15 @@ const Login = () => {
 
   // 카카오 로그인
   const REST_API_KEY = "30a2cc6b30207a6103d6d48f7605305e";
-  const REDIRECT_URI = "http://localhost:3000";
-  const KaKaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const REDIRECT_URI = "http://localhost:3000/oauth/kakao";
+  const KaKaoURL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`;
 
   async function doKakaoLogin(e) {
-    console.log("doKakaoLogin"); //
     e.preventDefault();
-    window.location.href = KaKaoURL;
-    const code = new URL(window.location.href).searchParams.get("code");
-    console.log(code); //
-    getAccessToken(code);
-  }
-
-  async function getAccessToken(AUTHORIZATION_CODE) {
     try {
-      console.log("getAccessToken"); //
-      const response = await axios({
-        method: "POST",
-        headers: {
-          "content-type": "application/x-www-form-urlencoded;charset=utf-8",
-        },
-        url: "https://kauth.kakao.com/oauth/token",
-        data: {
-          grant_type: "authorization_code",
-          client_id: REST_API_KEY,
-          redirect_uri: REDIRECT_URI,
-          AUTHORIZATION_CODE,
-        },
-      }).then(() => {
-        getKakaoUserInfo(response.data.access_token);
-      });
+      window.location.href = KaKaoURL;
     } catch (error) {
-      console.log("Error : ", error);
-    }
-  }
-
-  async function getKakaoUserInfo(ACCESS_TOKEN) {
-    try {
-      console.log("getKakaoUserInfo"); //
-      const response = await axios({
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${ACCESS_TOKEN}`, // 카카오 토큰 api로 얻은 accesstoken 보내기
-        },
-        url: "https://kapi.kakao.com/v2/user/me",
-      });
-      sessionStorage.setItem("isLogin", true);
-      sessionStorage.setItem(
-        "nickname",
-        response.data.kakao_account.profile.nickname
-      );
-    } catch (error) {
-      console.log("getKakaoUserInfo - Error : ", error);
+      alert("doKakaoLogin - Error");
     }
   }
 
