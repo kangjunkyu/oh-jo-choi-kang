@@ -1,17 +1,20 @@
-
 import ChatList from "../Mypage/ChatList";
 import ChatDetail from "../Chat/ChatDetail";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const BoardDetail = ({ boardDetail, onEdit, onRemove }) => {
+  const [chatData, setChatData] = useState([]);
+  const [selectedChatId, setSelectedChatId] = useState(null);
+  const [chatDetailData, setChatDetailData] = useState(null);
+
+  useEffect(() => {
+    getData();
+  }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때 한 번만 실행
   if (!boardDetail) {
     return <div>게시글이 선택되지 않았습니다.</div>;
   }
   const { id, writer, title, content, price, img } = boardDetail;
-  const [chatData, setChatData] = useState([]);
-  const [selectedChatId, setSelectedChatId] = useState(null);
-  const [chatDetailData, setChatDetailData] = useState(null);
 
   const getData = async () => {
     try {
@@ -29,9 +32,7 @@ const BoardDetail = ({ boardDetail, onEdit, onRemove }) => {
 
   const getDetailData = async (selectedChatId) => {
     try {
-      const res = await fetch(
-        `http://localhost:8080/chat/${selectedChatId}`
-      );
+      const res = await fetch(`http://localhost:8080/chat/${selectedChatId}`);
       if (!res.ok) {
         throw new Error("Failed to fetch data");
       }
@@ -62,10 +63,6 @@ const BoardDetail = ({ boardDetail, onEdit, onRemove }) => {
 
   // const requestData = { key: "id" };
   // postData(requestData);
-
-  useEffect(() => {
-    getData();
-  }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때 한 번만 실행
 
   const getChatDetail = (id) => {
     const selectedChat = chatData.find((chatRoom) => chatRoom.id === id);
@@ -116,24 +113,23 @@ const BoardDetail = ({ boardDetail, onEdit, onRemove }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(
-        "http://localhost:8080/chat/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId: sessionStorage.getItem("id"),
-            boardId: boardDetail.id,
-          }),
-        }
-      );
+      const response = await fetch("http://localhost:8080/chat/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: sessionStorage.getItem("id"),
+          boardId: boardDetail.id,
+        }),
+      });
 
       if (response.ok) {
-        await onChatRoom()
+        const chatData = await response.json();
+        const selectedChatId = chatData.id; // 채팅 방의 ID를 가져옴
+        setSelectedChatId(selectedChatId);
       } else {
-        console.error("게시글 찜하기에 실패했습니다.");
+        console.error("채팅 시작에 실패했습니다.");
       }
     } catch (error) {
       console.error("요청 중 오류 발생", error);
