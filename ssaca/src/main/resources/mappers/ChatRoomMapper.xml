@@ -20,8 +20,8 @@
 
     <insert id="insertChatRoom" parameterType="ChatRoom" >
         INSERT INTO chatRoom
-        (sellerId, userId, boardId)
-        VALUES(#{sellerId}, #{userId}, #{boardId});
+        (userId, boardId)
+        VALUES(#{userId}, #{boardId});
     </insert>
 
     <delete id="deleteChatRoom" parameterType="int">

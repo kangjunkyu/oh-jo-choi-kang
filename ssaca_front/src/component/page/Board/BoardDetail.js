@@ -1,12 +1,18 @@
 import ChatList from "../Mypage/ChatList";
 import ChatDetail from "../Chat/ChatDetail";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const BoardDetail = ({ boardDetail, onEdit, onRemove }) => {
   const [chatData, setChatData] = useState([]);
   const [selectedChatId, setSelectedChatId] = useState(null);
   const [chatDetailData, setChatDetailData] = useState(null);
+
+  const navigate = useNavigate();
+
+  const goToChat = () => {
+    navigate("/chat");
+  };
 
   if (!boardDetail) {
     return <div>게시글이 선택되지 않았습니다.</div>;
@@ -125,6 +131,8 @@ const BoardDetail = ({ boardDetail, onEdit, onRemove }) => {
         const chatData = await response.json();
         const selectedChatId = chatData.id; // 채팅 방의 ID를 가져옴
         setSelectedChatId(selectedChatId);
+        goToChat();
+
       } else {
         console.error("채팅 시작에 실패했습니다.");
       }

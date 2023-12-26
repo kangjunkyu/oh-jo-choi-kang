@@ -56,19 +56,19 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ssaca`.`chatRoom` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `sellerId` VARCHAR(45) NOT NULL,
   `userId` VARCHAR(45) NOT NULL,
+  `boardId` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_chatRoom_user1_idx` (`sellerId` ASC) VISIBLE,
-  INDEX `fk_chatRoom_user2_idx` (`userId` ASC) VISIBLE,
+  INDEX `fk_chatRoom_user1_idx` (`userId` ASC) VISIBLE,
+  INDEX `fk_chatRoom_board1_idx` (`boardId` ASC) VISIBLE,
   CONSTRAINT `fk_chatRoom_user1`
-    FOREIGN KEY (`sellerId`)
+    FOREIGN KEY (`userId`)
     REFERENCES `ssaca`.`user` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_chatRoom_user2`
-    FOREIGN KEY (`userId`)
-    REFERENCES `ssaca`.`user` (`id`)
+  CONSTRAINT `fk_chatRoom_board1`
+    FOREIGN KEY (`boardId`)
+    REFERENCES `ssaca`.`board` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

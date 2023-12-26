@@ -22,13 +22,13 @@ VALUES('choi', 1),
 ('ssafy', 4),
 ( 'oh', 5);
 
-INSERT INTO chatroom (sellerId, userId)
-VALUES('oh', 'choi'),
-('oh', 'jo'),
-('kang', 'oh'),
-('jo', 'choi'),
-( 'oh', 'kang'),
-('ssafy', 'choi');
+INSERT INTO chatroom (userId, boardId)
+VALUES('choi', 1),
+('jo', 1),
+('oh', 2),
+('choi', 3),
+('kang', 4),
+('choi', 5);
 
 INSERT INTO chatmessage (roomId, userId, message)
 VALUES(1, 'choi', '샤오미 아닌가요?'),
