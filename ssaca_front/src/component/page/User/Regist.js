@@ -1,6 +1,7 @@
 import "./Regist.css";
 import axios from "axios";
-import { useState } from "react";
+import Swal from "sweetalert2";
+import { useState, useEffect } from "react";
 
 const Regist = () => {
   const API = "http://localhost:8080/user";
@@ -10,26 +11,55 @@ const Regist = () => {
     password: "",
     pwCorrect: "",
     nickname: "",
+    isExist: false,
   });
 
   // 회원가입
-  const doRegist = (e) => {
+  async function doRegist(e) {
     e.preventDefault();
-  };
+
+    try {
+      const response = await axios.post(`${API}/`, {
+        id: state.id,
+        password: state.password,
+        nickname: state.nickname,
+      });
+      Swal.fire({
+        icon: "success",
+        title: "가입 성공",
+        text: "SSACA에 오신 것을 환영합니다!",
+        showCancelButton: false,
+        confirmButtonText: "닫기",
+      }).then(() => {
+        window.location.href = "/";
+      });
+    } catch (error) {
+      console.log("Regist - Error : ", error);
+    }
+  }
 
   // 아이디 중복 확인
+  useEffect(() => {
+    getStatus();
+  }, [state.id]);
+
+  const getStatus = async () => {
+    setState({
+      ...state,
+      isExist: await getId(),
+    });
+    const isExist = await getId();
+    console.log("isExist: ", isExist);
+    return isExist ? "InCorrect" : "Correct";
+  };
+
   const getId = async () => {
     try {
       const response = await axios.get(`${API}/${state.id}`);
-      if (response.data["id"]) {
-        console.log("true");
-        return true;
-      } else {
-        console.log("false");
-        return false;
-      }
+      console.log(state.id);
+      return response.status === 200 ? true : false;
     } catch (error) {
-      console.log("getId Error: ", error);
+      console.log("getId - Error : ", error);
       return false;
     }
   };
@@ -41,7 +71,9 @@ const Regist = () => {
         <h4>회원가입</h4>
 
         <input
-          className={state.id < 1 ? "" : getId() ? "InCorrect" : "Correct"}
+          className={
+            state.id < 1 ? "" : state.isExist ? "InCorrect" : "Correct"
+          }
           type="text"
           placeholder="아이디"
           value={state.id}
@@ -52,6 +84,13 @@ const Regist = () => {
             });
           }}
         />
+        <span>
+          {state.id < 1
+            ? ""
+            : state.isExist
+            ? "이미 존재하는 아이디입니다."
+            : ""}
+        </span>
 
         <input
           className={
@@ -72,6 +111,14 @@ const Regist = () => {
           }}
         />
 
+        <span>
+          {state.password < 1
+            ? ""
+            : state.password.length > 3
+            ? ""
+            : "비밀번호를 4글자 이상 입력해주세요."}
+        </span>
+
         <input
           className={
             state.pwCorrect < 1
@@ -91,11 +138,19 @@ const Regist = () => {
           }}
         />
 
+        <span>
+          {state.pwCorrect < 1
+            ? ""
+            : state.password === state.pwCorrect
+            ? ""
+            : "비밀번호가 다릅니다."}
+        </span>
+
         <input
           className={
             state.nickname < 1
               ? ""
-              : state.nickname.length > 3
+              : state.nickname.length > 2
               ? "Correct"
               : "InCorrect"
           }
@@ -109,7 +164,32 @@ const Regist = () => {
             });
           }}
         />
-        <button className="button-regist" type="submit">
+        <span>
+          {state.nickname < 1
+            ? ""
+            : state.nickname.length > 2
+            ? ""
+            : "닉네임을 3글자 이상 입력해주세요."}
+        </span>
+        <button
+          className={
+            !state.isExist &&
+            state.password.length > 3 &&
+            state.password === state.pwCorrect &&
+            state.nickname.length > 2
+              ? "button-regist"
+              : "button-regist-disable"
+          }
+          type="submit"
+          disable={
+            !state.isExist &&
+            state.password.length > 3 &&
+            state.password === state.pwCorrect &&
+            state.nickname.length > 2
+              ? ""
+              : "disable"
+          }
+        >
           회원가입
         </button>
       </form>
