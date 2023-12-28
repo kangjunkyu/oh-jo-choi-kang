@@ -8,6 +8,7 @@ import Regist from "./component/page/User/Regist";
 import Mypage from "./component/page/Mypage/Mypage";
 import Kakao from "./component/page/User/Kakao";
 import Chat from "./component/page/Chat/ChatDetail";
+import ChatTest from "./component/page/Chat/ChatTest";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/mypage" element={<Mypage />} />
           <Route path="oauth/kakao" element={<Kakao />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/chatTest" element={<ChatTest/>}/>
         </Routes>
       </div>
     </BrowserRouter>
