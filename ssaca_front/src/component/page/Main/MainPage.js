@@ -145,6 +145,9 @@ const MainPage = () => {
 
   return (
     <div className="App">
+      <Link to={"boardCreate"}>
+        <button className="writeBoard">글 작성하기</button>
+      </Link>
       <div>
         {/* <Link to={`/boardDetail/${selectedBoardId}`}> */}
         <BoardList
@@ -156,33 +159,7 @@ const MainPage = () => {
           onRemove={() => onRemove(selectedBoardId)}
           boardDetailData={boardDetailData}
         />
-        {/* </Link> */}
       </div>
-      {/* <div>
-        <BoardList
-          onItemClick={onBoardItemClick}
-          boardList={boardData}
-          onRemove={onRemove}
-          onEdit={onEdit}
-          onClick={getDetailData}
-        />
-        <Link to={`/boardDetail/${selectedBoardId}`}>
-          {selectedBoardId && (
-            <BoardDetail
-              boardDetail={(getBoardDetail(selectedBoardId), boardDetailData)}
-              onRemove={() => onRemove(selectedBoardId)}
-              onEdit={onEdit}
-              boardDetailData={boardDetailData}
-            />
-          )}
-        </Link>
-      </div> */}
-      <BoardCreate onCreate={onCreate} postData={postData} />
-      {/* <BoardUpdate
-        onEdit={onEdit}
-        // getDetailData={getDetailData}
-        boardDetail={boardDetailData}
-      /> */}
     </div>
   );
 };
