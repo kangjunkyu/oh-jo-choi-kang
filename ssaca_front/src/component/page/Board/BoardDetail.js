@@ -1,12 +1,16 @@
 import ChatList from "../Mypage/ChatList";
 import ChatDetail from "../Chat/ChatDetail";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import BoardUpdate from "./BoardUpdate";
 
-const BoardDetail = ({ boardDetail, onEdit, onRemove }) => {
+const BoardDetail = ({ onEdit, onRemove }) => {
+  const { idParam } = useParams();
+
   const [chatData, setChatData] = useState([]);
   const [selectedChatId, setSelectedChatId] = useState(null);
   const [chatDetailData, setChatDetailData] = useState(null);
+  const [boardDetailData, setBoardDetailData] = useState(null);
 
   const navigate = useNavigate();
 
@@ -14,75 +18,32 @@ const BoardDetail = ({ boardDetail, onEdit, onRemove }) => {
     navigate("/chat");
   };
 
-  if (!boardDetail) {
-    return <div>게시글이 선택되지 않았습니다.</div>;
-  }
-  const { id, writer, title, content, price, img } = boardDetail;
-
-  const getData = async () => {
+  const getBoardDetailData = async (idParam) => {
     try {
-      const res = await fetch("http://localhost:8080/chat");
-      if (!res.ok) {
-        throw new Error("Failed to fetch data");
-      }
-
-      const data = await res.json();
-      setChatData(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  const getDetailData = async (selectedChatId) => {
-    try {
-      const res = await fetch(`http://localhost:8080/chat/${selectedChatId}`);
+      const res = await fetch(`http://localhost:8080/api/board/${idParam}`);
       if (!res.ok) {
         throw new Error("Failed to fetch data");
       }
 
       const data = await res.json();
       console.log(data);
-      setChatDetailData(data);
+      setBoardDetailData(data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
-  const postData = async (requestData) => {
-    try {
-      const response = await fetch("http://localhost:8080/chat/", {
-        method: "POST",
-        headers: {},
-        body: requestData,
-      });
+  useEffect(() => {
+    getBoardDetailData(idParam);
+    console.log(boardDetailData);
+    console.log(idParam);
+  }, [idParam]);
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-    } catch (err) {
-      console.error("Error during POST request:", err);
-    }
-  };
+  if (!boardDetailData) {
+    return <div>게시글이 선택되지 않았습니다.</div>;
+  }
 
-  // const requestData = { key: "id" };
-  // postData(requestData);
-
-  const getChatDetail = (id) => {
-    const selectedChat = chatData.find((chatRoom) => chatRoom.id === id);
-    return selectedChat;
-  };
-
-  // const onChatClick = async (id) => {
-  //   setSelectedChatId(id);
-
-  //   try {
-  //     await getData(); // 데이터가 가져와질 때까지 기다림
-  //     const chatDetail = await getChatDetail(id); // 게시글 세부 정보가 가져와질 때까지 기다림
-  //     setChatDetailData(chatDetail); // 상태에 게시글 세부 정보 설정
-  //   } catch (error) {
-  //     console.error("데이터를 불러오는 중 오류 발생:", error);
-  //   }
-  // };
+  const { id, writer, title, content, price, img } = boardDetailData;
 
   const handleAddToWishlist = async (e) => {
     e.preventDefault();
@@ -97,7 +58,7 @@ const BoardDetail = ({ boardDetail, onEdit, onRemove }) => {
           },
           body: JSON.stringify({
             userId: sessionStorage.getItem("id"),
-            boardId: boardDetail.id,
+            boardId: boardDetailData.id,
           }),
         }
       );
@@ -123,16 +84,15 @@ const BoardDetail = ({ boardDetail, onEdit, onRemove }) => {
         },
         body: JSON.stringify({
           userId: sessionStorage.getItem("id"),
-          boardId: boardDetail.id,
+          boardId: boardDetailData.id,
         }),
       });
 
       if (response.ok) {
         const chatData = await response.json();
-        const selectedChatId = chatData.id; // 채팅 방의 ID를 가져옴
+        const selectedChatId = chatData.id;
         setSelectedChatId(selectedChatId);
         goToChat();
-
       } else {
         console.error("채팅 시작에 실패했습니다.");
       }
@@ -152,7 +112,7 @@ const BoardDetail = ({ boardDetail, onEdit, onRemove }) => {
       <div className="detailTitle">게시글 상세 내역</div>
       <div className="detailCard">
         <div className="left">
-          <img src={img} />
+          <img src={img} alt="Board" />
         </div>
         <div className="right">
           <div>상태 : 판매중</div>
@@ -166,13 +126,15 @@ const BoardDetail = ({ boardDetail, onEdit, onRemove }) => {
             {!selectedChatId && <button onClick={handleChat}>채팅하기</button>}
           </div>
         </div>
-        <br />
       </div>
       <div className="button">
-        <button>수정</button>
-        <button onClick={handleRemove}>삭제</button>
+        <Link to={`/boardUpdate/${idParam}`}>
+          <button>수정</button>
+        </Link>
+        <button onClick={() => handleRemove(id)}>삭제</button>
       </div>
     </div>
   );
 };
+
 export default BoardDetail;

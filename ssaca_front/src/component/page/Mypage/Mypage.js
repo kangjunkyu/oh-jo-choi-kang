@@ -17,7 +17,9 @@ const Mypage = () => {
 
   const getMyBoardData = async () => {
     try {
-      const result = await axios.get(`http://localhost:8080/api/board/user/${userId}`);
+      const result = await axios.get(
+        `http://localhost:8080/api/board/user/${userId}`
+      );
       setMyBoardData(result.data);
     } catch (error) {
       console.error("MyBoard 데이터를 불러오는 중 오류", error);
@@ -30,11 +32,14 @@ const Mypage = () => {
 
   const getWishList = async () => {
     try {
-      const result = await axios.get("http://localhost:8080/api/board/wishList", {
-        params: {
-          userId: userId,
-        },
-      });
+      const result = await axios.get(
+        "http://localhost:8080/api/board/wishList",
+        {
+          params: {
+            userId: userId,
+          },
+        }
+      );
       setWishData(result.data);
     } catch (error) {
       console.error("WishList 데이터를 불러오는 중 에러", error);
@@ -79,21 +84,12 @@ const Mypage = () => {
           onItemClick={onMyBoardItemClick}
           myBoardList={myBoardData}
         />
-        {mySelectedBoardId && (
-          <BoardDetail
-            boardDetail={myBoardDetailData}
-          />
-        )}
+        {mySelectedBoardId && <BoardDetail boardDetail={myBoardDetailData} />}
       </div>
       <div>
-        <WishList
-          onItemClick={onWishItemClick}
-          myWishList={wishData}
-        />
+        <WishList onItemClick={onWishItemClick} myWishList={wishData} />
         {wishSelectedBoardId && (
-          <BoardDetail
-            boardDetail={wishBoardDetailData}
-          />
+          <BoardDetail boardDetail={wishBoardDetailData} />
         )}
       </div>
     </div>

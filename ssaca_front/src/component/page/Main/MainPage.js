@@ -24,22 +24,22 @@ const MainPage = () => {
     }
   };
 
-  const getDetailData = async (selectedBoardId) => {
-    try {
-      const res = await fetch(
-        `http://localhost:8080/api/board/${selectedBoardId}`
-      );
-      if (!res.ok) {
-        throw new Error("Failed to fetch data");
-      }
+  // const getDetailData = async (selectedBoardId) => {
+  //   try {
+  //     const res = await fetch(
+  //       `http://localhost:8080/api/board/${selectedBoardId}`
+  //     );
+  //     if (!res.ok) {
+  //       throw new Error("Failed to fetch data");
+  //     }
 
-      const data = await res.json();
-      console.log(data);
-      setBoardDetailData(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  //     const data = await res.json();
+  //     console.log(data);
+  //     setBoardDetailData(data);
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
 
   const postData = async (requestData) => {
     try {
@@ -146,6 +146,19 @@ const MainPage = () => {
   return (
     <div className="App">
       <div>
+        {/* <Link to={`/boardDetail/${selectedBoardId}`}> */}
+        <BoardList
+          onItemClick={onBoardItemClick}
+          boardList={boardData}
+          onEdit={onEdit}
+          // onClick={getDetailData}
+          boardDetail={(getBoardDetail(selectedBoardId), boardDetailData)}
+          onRemove={() => onRemove(selectedBoardId)}
+          boardDetailData={boardDetailData}
+        />
+        {/* </Link> */}
+      </div>
+      {/* <div>
         <BoardList
           onItemClick={onBoardItemClick}
           boardList={boardData}
@@ -153,7 +166,7 @@ const MainPage = () => {
           onEdit={onEdit}
           onClick={getDetailData}
         />
-        <Link to="/boardDetail/${}">
+        <Link to={`/boardDetail/${selectedBoardId}`}>
           {selectedBoardId && (
             <BoardDetail
               boardDetail={(getBoardDetail(selectedBoardId), boardDetailData)}
@@ -163,13 +176,13 @@ const MainPage = () => {
             />
           )}
         </Link>
-      </div>
+      </div> */}
       <BoardCreate onCreate={onCreate} postData={postData} />
-      <BoardUpdate
+      {/* <BoardUpdate
         onEdit={onEdit}
-        getDetailData={getDetailData}
+        // getDetailData={getDetailData}
         boardDetail={boardDetailData}
-      />
+      /> */}
     </div>
   );
 };
