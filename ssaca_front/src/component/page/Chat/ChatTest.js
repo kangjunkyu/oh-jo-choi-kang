@@ -30,7 +30,7 @@ const ChatTest = () => {
     };
 
     return (
-
+        <div>ㅇ</div>
     );
   };
   export default ChatTest;
