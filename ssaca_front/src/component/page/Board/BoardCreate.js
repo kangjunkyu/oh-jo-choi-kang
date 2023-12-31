@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Form } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const BoardCreate = ({ onCreate, postData }) => {
+const BoardCreate = ({ onCreate }) => {
   const [state, setState] = useState({
     id: "",
     title: "",
@@ -13,6 +14,7 @@ const BoardCreate = ({ onCreate, postData }) => {
     img: "",
     orgImg: "",
   });
+  const navigate = useNavigate();
 
   const [titleInput, setTitleInput] = useState("");
   const [contentInput, setContentInput] = useState("");
@@ -25,6 +27,22 @@ const BoardCreate = ({ onCreate, postData }) => {
       ...state,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const postData = async (requestData) => {
+    try {
+      const response = await fetch("http://localhost:8080/api/board", {
+        method: "POST",
+        headers: {},
+        body: requestData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+    } catch (err) {
+      console.error("Error during POST request:", err);
+    }
   };
 
   const handleFileChange = () => {
@@ -70,8 +88,8 @@ const BoardCreate = ({ onCreate, postData }) => {
 
     const response = await postData(formData);
 
-    console.log(newData);
-    console.log(response);
+    alert("수정 성공");
+    navigate("/");
   };
 
   return (

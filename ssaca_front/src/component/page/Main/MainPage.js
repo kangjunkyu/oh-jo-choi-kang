@@ -24,22 +24,22 @@ const MainPage = () => {
     }
   };
 
-  const getDetailData = async (selectedBoardId) => {
-    try {
-      const res = await fetch(
-        `http://localhost:8080/api/board/${selectedBoardId}`
-      );
-      if (!res.ok) {
-        throw new Error("Failed to fetch data");
-      }
+  // const getDetailData = async (selectedBoardId) => {
+  //   try {
+  //     const res = await fetch(
+  //       `http://localhost:8080/api/board/${selectedBoardId}`
+  //     );
+  //     if (!res.ok) {
+  //       throw new Error("Failed to fetch data");
+  //     }
 
-      const data = await res.json();
-      console.log(data);
-      setBoardDetailData(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  //     const data = await res.json();
+  //     console.log(data);
+  //     setBoardDetailData(data);
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
 
   const postData = async (requestData) => {
     try {
@@ -145,31 +145,21 @@ const MainPage = () => {
 
   return (
     <div className="App">
+      <Link to={"boardCreate"}>
+        <button className="writeBoard">글 작성하기</button>
+      </Link>
       <div>
+        {/* <Link to={`/boardDetail/${selectedBoardId}`}> */}
         <BoardList
           onItemClick={onBoardItemClick}
           boardList={boardData}
-          onRemove={onRemove}
           onEdit={onEdit}
-          onClick={getDetailData}
+          // onClick={getDetailData}
+          boardDetail={(getBoardDetail(selectedBoardId), boardDetailData)}
+          onRemove={() => onRemove(selectedBoardId)}
+          boardDetailData={boardDetailData}
         />
-        <Link to="/boardDetail/${}">
-          {selectedBoardId && (
-            <BoardDetail
-              boardDetail={(getBoardDetail(selectedBoardId), boardDetailData)}
-              onRemove={() => onRemove(selectedBoardId)}
-              onEdit={onEdit}
-              boardDetailData={boardDetailData}
-            />
-          )}
-        </Link>
       </div>
-      <BoardCreate onCreate={onCreate} postData={postData} />
-      <BoardUpdate
-        onEdit={onEdit}
-        getDetailData={getDetailData}
-        boardDetail={boardDetailData}
-      />
     </div>
   );
 };

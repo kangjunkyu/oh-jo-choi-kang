@@ -1,6 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
-const BoardUpdate = ({ onEdit, boardDetail }) => {
+const BoardUpdate = ({}) => {
+  const { idParam } = useParams();
+  const navigate = useNavigate();
+  const [BoardDetailData, setBoardDetailData] = useState(null);
   const [state, setState] = useState({
     id: "",
     title: "",
@@ -13,18 +17,62 @@ const BoardUpdate = ({ onEdit, boardDetail }) => {
     orgImg: "",
   });
 
+  const getBoardDetailData = async (idParam) => {
+    try {
+      const res = await fetch(`http://localhost:8080/api/board/${idParam}`);
+      if (!res.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const data = await res.json();
+      console.log(data);
+      setBoardDetailData(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   useEffect(() => {
-    if (boardDetail) {
+    getBoardDetailData(idParam);
+    console.log("boardDetailData : ", BoardDetailData);
+    console.log("idParams:", idParam);
+  }, [idParam]);
+
+  useEffect(() => {
+    if (BoardDetailData) {
       setState({
-        id: boardDetail.id,
-        title: boardDetail.title,
-        content: boardDetail.content,
-        price: boardDetail.price,
+        id: BoardDetailData.id,
+        title: BoardDetailData.title,
+        content: BoardDetailData.content,
+        price: BoardDetailData.price,
         img: null,
-        orgImg: boardDetail.orgImg,
+        orgImg: BoardDetailData.orgImg,
       });
     }
-  }, [boardDetail]);
+  }, [BoardDetailData]);
+
+  const onEdit = async (updatedData) => {
+    try {
+      const response = await fetch("http://localhost:8080/api/board", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+      });
+      console.log(response);
+      if (response.ok) {
+        // const newData = await response.json();
+
+        // console.log(newData);
+        console.log("요청성공");
+      } else {
+        console.error("Error 서버 응답 실패");
+      }
+    } catch (error) {
+      console.error("요청 중 오류 발생", error);
+    }
+  };
 
   const titleInput = useRef();
   const contentInput = useRef();
@@ -42,6 +90,8 @@ const BoardUpdate = ({ onEdit, boardDetail }) => {
   const handleSubmit = () => {
     onEdit(state);
     alert("수정 성공");
+
+    navigate("/");
   };
 
   return (
