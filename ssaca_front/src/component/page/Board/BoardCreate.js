@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Form } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const BoardCreate = ({ onCreate }) => {
@@ -88,7 +87,9 @@ const BoardCreate = ({ onCreate }) => {
 
     const response = await postData(formData);
 
-    alert("수정 성공");
+    console.log(response);
+
+    alert("작성 완료");
     navigate("/");
   };
 

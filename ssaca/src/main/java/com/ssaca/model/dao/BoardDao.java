@@ -37,5 +37,7 @@ public interface BoardDao {
     // 찜한 게시글 전체 조회
     List<Board> selectAllWishList(String userId);
 
+    wishList selectOneWishList(int id);
+
 
 }

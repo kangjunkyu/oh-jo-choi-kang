@@ -8,4 +8,6 @@ public class wishList {
     private int id;
     private String userId;
     private int boardId;
+
+    private boolean isWishListed;
 }

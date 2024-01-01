@@ -126,5 +126,14 @@ public class BoardRestController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("board/wishList/{id}")
+    @Operation(summary = "찜한 게시글 선택 조회")
+    public ResponseEntity<?> getWishSelectList(@PathVariable int id){
+        wishList result = boardService.selectOneWishList(id);
+        if(result == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
 }

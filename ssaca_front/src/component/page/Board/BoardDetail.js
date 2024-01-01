@@ -11,6 +11,7 @@ const BoardDetail = ({ onEdit, onRemove }) => {
   const [selectedChatId, setSelectedChatId] = useState(null);
   const [chatDetailData, setChatDetailData] = useState(null);
   const [boardDetailData, setBoardDetailData] = useState(null);
+  const [isWishListed, setIsWishListed] = useState(false);
 
   const navigate = useNavigate();
 
@@ -107,6 +108,39 @@ const BoardDetail = ({ onEdit, onRemove }) => {
     }
   };
 
+  const handleToggleWishlist = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/board/insertWishList",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: sessionStorage.getItem("id"),
+            boardId: boardDetailData.id,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        // 찜 상태를 토글합니다.
+        setIsWishListed(!isWishListed);
+
+        if (isWishListed) {
+          alert("찜을 취소했습니다.");
+        } else {
+          alert("게시글을 찜했습니다.");
+        }
+      } else {
+        alert("찜 상태를 변경하는데 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("찜 상태 변경 중 오류 발생:", error);
+    }
+  };
+
   return (
     <div className="BoardDetail">
       <div className="detailTitle">게시글 상세 내역</div>
@@ -121,7 +155,9 @@ const BoardDetail = ({ onEdit, onRemove }) => {
           <div>content : {content}</div>
           <div>price : {price}</div>
           <div className="innerButton">
-            <button onClick={handleAddToWishlist}>찜하기</button>
+            <button onClick={handleToggleWishlist}>
+              {isWishListed ? "찜 취소" : "찜하기"}
+            </button>
             {selectedChatId && <Link to={"/chat"}>채팅하기</Link>}
             {!selectedChatId && <button onClick={handleChat}>채팅하기</button>}
           </div>

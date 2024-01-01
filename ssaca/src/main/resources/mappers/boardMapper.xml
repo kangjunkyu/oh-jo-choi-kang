@@ -66,4 +66,8 @@
         SELECT * FROM board
         WHERE id in (SELECT boardId FROM wishList WHERE userId = #{userId})
     </select>
+
+    <select id="selectOneWishList" parameterType="int" resultType="wishList">
+        SELECT * FROM wishList WHERE id = #{id};
+    </select>
 </mapper>

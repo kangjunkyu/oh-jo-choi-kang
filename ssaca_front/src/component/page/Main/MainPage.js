@@ -1,7 +1,4 @@
-import BoardCreate from "../Board/BoardCreate";
-import BoardUpdate from "../Board/BoardUpdate";
 import BoardList from "./BoardList";
-import BoardDetail from "../Board/BoardDetail";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -24,59 +21,9 @@ const MainPage = () => {
     }
   };
 
-  // const getDetailData = async (selectedBoardId) => {
-  //   try {
-  //     const res = await fetch(
-  //       `http://localhost:8080/api/board/${selectedBoardId}`
-  //     );
-  //     if (!res.ok) {
-  //       throw new Error("Failed to fetch data");
-  //     }
-
-  //     const data = await res.json();
-  //     console.log(data);
-  //     setBoardDetailData(data);
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
-
-  const postData = async (requestData) => {
-    try {
-      const response = await fetch("http://localhost:8080/api/board", {
-        method: "POST",
-        headers: {},
-        body: requestData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-    } catch (err) {
-      console.error("Error during POST request:", err);
-    }
-  };
-
-  // const requestData = { key: "id" };
-  // postData(requestData);
-
   useEffect(() => {
     getData();
   }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때 한 번만 실행
-
-  const onCreate = (title, content, price, img) => {
-    const create_data = new Date().getTime();
-    const newItem = {
-      title,
-      content,
-      price,
-      img,
-      create_data,
-    };
-    // console.log(newItem);
-
-    setBoardData((prevData) => [newItem, ...prevData]);
-  };
 
   const onRemove = async (selectedBoardId) => {
     try {
@@ -143,10 +90,31 @@ const MainPage = () => {
     }
   };
 
+  const loginCheck = () => {
+    if (sessionStorage.getItem("id") === null) {
+      alert("로그인을 해야 글 작성이 가능합니다.");
+    }
+  };
+
   return (
     <div className="App">
-      <Link to={"boardCreate"}>
-        <button className="writeBoard">글 작성하기</button>
+      <Link to={sessionStorage.getItem("id") === null ? "/" : "boardCreate"}>
+        <div
+          className="writeBoard"
+          onClick={loginCheck}
+          style={{
+            position: "fixed",
+            bottom: "40px",
+            right: "20px",
+            height: "100px",
+            width: "150px",
+            backgroundColor: "gray",
+            textAlign: "center",
+            fontSize: "30px",
+          }}
+        >
+          글 작성하기
+        </div>
       </Link>
       <div>
         {/* <Link to={`/boardDetail/${selectedBoardId}`}> */}

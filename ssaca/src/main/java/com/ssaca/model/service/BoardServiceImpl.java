@@ -63,4 +63,7 @@ public class BoardServiceImpl implements BoardService {
     public List<Board> selectAllWishList(String userId) {
         return dao.selectAllWishList(userId);
     }
+
+    @Override
+    public wishList selectOneWishList(int id) {return dao.selectOneWishList(id);}
 }
