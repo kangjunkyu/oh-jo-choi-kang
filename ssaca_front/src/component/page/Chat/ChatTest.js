@@ -27,6 +27,10 @@ const ChatTest = () => {
     );
   };
 
+<<<<<<< HEAD
   return <></>;
+=======
+  return <div>ㅇ</div>;
+>>>>>>> refs/remotes/origin/main
 };
 export default ChatTest;
