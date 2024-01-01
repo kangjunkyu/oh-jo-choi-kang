@@ -11,10 +11,7 @@ const BoardDetail = ({ onEdit, onRemove }) => {
   const [selectedChatId, setSelectedChatId] = useState(null);
   const [chatDetailData, setChatDetailData] = useState(null);
   const [boardDetailData, setBoardDetailData] = useState(null);
-<<<<<<< HEAD
   const [isWishListed, setIsWishListed] = useState(false);
-=======
->>>>>>> refs/remotes/origin/main
 
   const navigate = useNavigate();
 

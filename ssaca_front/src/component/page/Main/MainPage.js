@@ -21,8 +21,6 @@ const MainPage = () => {
     }
   };
 
-<<<<<<< HEAD
-=======
   // const getDetailData = async (selectedBoardId) => {
   //   try {
   //     const res = await fetch(
@@ -40,26 +38,25 @@ const MainPage = () => {
   //   }
   // };
 
-  const postData = async (requestData) => {
-    try {
-      const response = await fetch("http://localhost:8080/api/board", {
-        method: "POST",
-        headers: {},
-        body: requestData,
-      });
+  // const postData = async (requestData) => {
+  //   try {
+  //     const response = await fetch("http://localhost:8080/api/board", {
+  //       method: "POST",
+  //       headers: {},
+  //       body: requestData,
+  //     });
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-    } catch (err) {
-      console.error("Error during POST request:", err);
-    }
-  };
+  //     if (!response.ok) {
+  //       throw new Error("Network response was not ok");
+  //     }
+  //   } catch (err) {
+  //     console.error("Error during POST request:", err);
+  //   }
+  // };
 
   // const requestData = { key: "id" };
   // postData(requestData);
 
->>>>>>> refs/remotes/origin/main
   useEffect(() => {
     getData();
   }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때 한 번만 실행
@@ -137,7 +134,6 @@ const MainPage = () => {
 
   return (
     <div className="App">
-<<<<<<< HEAD
       <Link to={sessionStorage.getItem("id") === null ? "/" : "boardCreate"}>
         <div
           className="writeBoard"
@@ -155,10 +151,6 @@ const MainPage = () => {
         >
           글 작성하기
         </div>
-=======
-      <Link to={"boardCreate"}>
-        <button className="writeBoard">글 작성하기</button>
->>>>>>> refs/remotes/origin/main
       </Link>
       <div>
         {/* <Link to={`/boardDetail/${selectedBoardId}`}> */}
